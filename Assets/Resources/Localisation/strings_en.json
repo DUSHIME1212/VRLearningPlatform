@@ -1,0 +1,33 @@
+{
+  "entries": [
+    { "key": "app_title",                    "value": "VR Learning World" },
+    { "key": "btn_play",                     "value": "Play" },
+    { "key": "btn_back",                     "value": "Back" },
+    { "key": "btn_hint",                     "value": "Show Hint" },
+    { "key": "btn_try_again",                "value": "Try Again" },
+    { "key": "btn_run",                      "value": "Run Program" },
+    { "key": "btn_clear",                    "value": "Clear" },
+    { "key": "npc_intro",                    "value": "Welcome to Code World! Each building holds a secret. Can you solve them all?" },
+    { "key": "npc_building_sequence",        "value": "Put the steps in the right order and your robot will follow them!" },
+    { "key": "npc_building_loop",            "value": "Instead of writing the same step many times, use a loop!" },
+    { "key": "npc_building_condition",       "value": "What should the robot do IF the door is locked? And if it is not?" },
+    { "key": "instruction_moveforward",      "value": "Move Forward" },
+    { "key": "instruction_turnleft",         "value": "Turn Left" },
+    { "key": "instruction_turnright",        "value": "Turn Right" },
+    { "key": "instruction_pickup",           "value": "Pick Up" },
+    { "key": "instruction_jump",             "value": "Jump" },
+    { "key": "instruction_wait",             "value": "Wait" },
+    { "key": "ui_session_warning",           "value": "Almost time! Let's finish up soon." },
+    { "key": "ui_stars_3",                   "value": "Amazing! 3 stars!" },
+    { "key": "ui_stars_2",                   "value": "Well done! 2 stars!" },
+    { "key": "ui_stars_1",                   "value": "Good try! 1 star!" },
+    { "key": "ui_puzzle_complete",           "value": "Puzzle Complete!" },
+    { "key": "ui_hint_label",               "value": "Hint" },
+    { "key": "module_codeworld_title",       "value": "Code World" },
+    { "key": "module_codeworld_desc",        "value": "Walk through a VR town and solve programming puzzles!" },
+    { "key": "module_simbuilder_title",      "value": "Simulation Builder" },
+    { "key": "module_simbuilder_desc",       "value": "Build your own programmes with drag-and-drop blocks." },
+    { "key": "module_arworksheet_title",     "value": "AR Worksheet" },
+    { "key": "module_arworksheet_desc",      "value": "Point your tablet at the worksheet to bring it to life!" }
+  ]
+}

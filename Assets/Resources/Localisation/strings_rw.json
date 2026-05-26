@@ -1,0 +1,33 @@
+{
+  "entries": [
+    { "key": "app_title",                    "value": "Isi y'Kwiga ya VR" },
+    { "key": "btn_play",                     "value": "Kina" },
+    { "key": "btn_back",                     "value": "Subira Inyuma" },
+    { "key": "btn_hint",                     "value": "Reba Icyifuzo" },
+    { "key": "btn_try_again",                "value": "Ongera Ugerageze" },
+    { "key": "btn_run",                      "value": "Koresha Porogaramu" },
+    { "key": "btn_clear",                    "value": "Siba" },
+    { "key": "npc_intro",                    "value": "Murakaza neza mu Isi ya Code! Inyubako zose zifite ibanga. Urashobora kuzisobanura zose?" },
+    { "key": "npc_building_sequence",        "value": "Shyira intambwe mu murongo ukwiye kandi robot yawe izikurikira!" },
+    { "key": "npc_building_loop",            "value": "Aho kwandika intambwe imwe kenshi, koresha loop!" },
+    { "key": "npc_building_condition",       "value": "Robot igomba gukora iki NIBA umuryango urafunze? N'igihe utafunze?" },
+    { "key": "instruction_moveforward",      "value": "Jya Imbere" },
+    { "key": "instruction_turnleft",         "value": "Hindukira Ibumoso" },
+    { "key": "instruction_turnright",        "value": "Hindukira Iburyo" },
+    { "key": "instruction_pickup",           "value": "Fata" },
+    { "key": "instruction_jump",             "value": "Simbuka" },
+    { "key": "instruction_wait",             "value": "Tegereza" },
+    { "key": "ui_session_warning",           "value": "Hafi ya gusoza! Reka duture vuba." },
+    { "key": "ui_stars_3",                   "value": "Wabaye inzwi! Inyenyeri 3!" },
+    { "key": "ui_stars_2",                   "value": "Wabigenze neza! Inyenyeri 2!" },
+    { "key": "ui_stars_1",                   "value": "Ugerageje neza! Inyenyeri 1!" },
+    { "key": "ui_puzzle_complete",           "value": "Puzzle Yarangiye!" },
+    { "key": "ui_hint_label",               "value": "Icyifuzo" },
+    { "key": "module_codeworld_title",       "value": "Isi ya Code" },
+    { "key": "module_codeworld_desc",        "value": "Spacer mu mugi wa VR ukemure ibibazo by'porogaramu!" },
+    { "key": "module_simbuilder_title",      "value": "Ubwubatsi bwa Simulation" },
+    { "key": "module_simbuilder_desc",       "value": "Bura porogaramu zawe ukoresheje blocks." },
+    { "key": "module_arworksheet_title",     "value": "Urupapuro rwa AR" },
+    { "key": "module_arworksheet_desc",      "value": "Rereka tablet yawe ku rupapuro ureba ubuzima!" }
+  ]
+}
