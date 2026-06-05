@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🌌 VRLearningPlatform</h1>
+  <h1>VRLearningPlatform</h1>
   <p><strong>Next-Generation Virtual Reality Educational Ecosystem</strong></p>
 
   <!-- Badges -->
@@ -16,7 +16,7 @@
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
 1. [Executive Summary & Vision](#-executive-summary--vision)
 2. [Architectural Overview](#-architectural-overview)
@@ -34,7 +34,7 @@
 
 ---
 
-## 🚀 Executive Summary & Vision
+## Executive Summary & Vision
 
 Welcome to the **VRLearningPlatform**, a state-of-the-art Virtual Reality educational ecosystem developed as a comprehensive **University Capstone Project**. Designed from the ground up to revolutionize digital learning, this project serves as a showcase of advanced spatial computing, software architecture, and immersive UI/UX design. Our primary goal is to leverage VR to create visceral, muscle-memory-forming educational experiences—specifically focusing on interactive physics simulations like our Simple Machines Lab.
 
@@ -44,7 +44,7 @@ This repository serves as the core monolith for our VR client applications. It e
 
 ---
 
-## 🏗 Architectural Overview
+## Architectural Overview
 
 The architecture of the VRLearningPlatform strictly adheres to **SOLID principles**, prioritizing decoupling, dependency injection, and modularity. In the unpredictable landscape of XR hardware, input paradigms shift rapidly. To insulate our core logic from these shifts, we employ a robust abstraction layer.
 
@@ -65,7 +65,7 @@ For UI and state management, we utilize a modified Model-View-Presenter (MVP) pa
 
 ---
 
-## 🛠 Core Technologies & Stack
+## Core Technologies & Stack
 
 We have selected a technology stack that balances bleeding-edge capabilities with production-ready stability.
 
@@ -79,7 +79,7 @@ We have selected a technology stack that balances bleeding-edge capabilities wit
 
 ---
 
-## ✋ XR Interaction & Hand Tracking
+## XR Interaction & Hand Tracking
 
 One of the standout features of this platform is its deeply integrated hand-tracking capabilities. We do not treat hands as mere laser pointers; we treat them as complex, multi-jointed physics objects capable of fine-motor manipulation.
 
@@ -96,7 +96,7 @@ We extend the base `XRBaseInteractor` and `XRBaseInteractable` classes to inject
 
 ---
 
-## 🏙 Environment & Asset Pipeline
+##  Environment & Asset Pipeline
 
 The visual fidelity of the VRLearningPlatform is tailored to maximize presence while minimizing draw calls. Our flagship environment, the **VR Classroom**, demonstrates our rigorous asset pipeline.
 
@@ -117,7 +117,7 @@ As a senior team, we enforce strict naming conventions and directory structures:
 
 ---
 
-## 🎓 Capstone Project Showcase: Simple Machines Lab
+## Capstone Project Showcase: Simple Machines Lab
 
 Here is a glimpse into the VRLearningPlatform's core physics and interaction modules. These screenshots highlight the **Simple Machines Lab**, where students learn about mechanical advantage through hands-on interaction.
 
@@ -143,7 +143,7 @@ Here is a glimpse into the VRLearningPlatform's core physics and interaction mod
 
 ---
 
-## ⚙️ Getting Started & Installation
+## Getting Started & Installation
 
 To clone and run this repository locally, you will need a solid understanding of Unity and Git. Since this is a production-scale VR application, the initial setup requires specific attention to detail.
 
@@ -182,7 +182,7 @@ To clone and run this repository locally, you will need a solid understanding of
 
 ---
 
-## 🛠 Advanced Setup & CI/CD Pipeline
+## Advanced Setup & CI/CD Pipeline
 
 In a senior development environment, we do not rely on "it works on my machine." We utilize Continuous Integration and Continuous Deployment (CI/CD) to guarantee build integrity.
 
@@ -204,7 +204,7 @@ Before any code is merged, it must pass a mandatory peer review. Reviewers are i
 
 ---
 
-## 📈 Performance Optimization & Profiling
+## Performance Optimization & Profiling
 
 VR development is an exercise in extreme performance optimization. If our application drops below 72 FPS on a Meta Quest 2, users will experience simulator sickness. This is unacceptable.
 
@@ -231,7 +231,7 @@ As a developer on this project, you are expected to attach the Unity Profiler to
 
 ---
 
-## 🧬 Design Patterns & Code Standards
+##  Design Patterns & Code Standards
 
 To maintain a massive codebase, rigid adherence to design patterns is required.
 
@@ -290,7 +290,7 @@ We are building for the future of Spatial Computing. Our immediate architectural
 
 ---
 
-## 🤝 Contributing Guidelines
+##  Contributing Guidelines
 
 We welcome contributions from senior XR developers, 3D technical artists, and UX designers. To ensure a smooth integration of your work:
 
@@ -301,7 +301,7 @@ We welcome contributions from senior XR developers, 3D technical artists, and UX
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the **MIT License**. This permissive license allows for the free use, modification, and distribution of this software for both academic and commercial purposes. 
 
