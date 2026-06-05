@@ -1,0 +1,11 @@
+Model Information:
+* title:	School_[class room]
+* source:	https://sketchfab.com/3d-models/school-class-room-371cd1996ed4452ebd1990132ba2d669
+* author:	yuuuusukeeee (https://sketchfab.com/yuuuusukeeee)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "School_[class room]" (https://sketchfab.com/3d-models/school-class-room-371cd1996ed4452ebd1990132ba2d669) by yuuuusukeeee (https://sketchfab.com/yuuuusukeeee) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

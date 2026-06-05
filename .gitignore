@@ -112,4 +112,6 @@ fmod_editor.log
 # Wwise
 .cache/
 GeneratedSoundBanks/
-SoundBanksInfo.xml
+SoundBanksInfo.xml/[Ll]ibrary/
+*.obj
+*.bin
