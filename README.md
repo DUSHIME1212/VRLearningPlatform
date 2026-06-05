@@ -122,23 +122,23 @@ As a senior team, we enforce strict naming conventions and directory structures:
 Here is a glimpse into the VRLearningPlatform's core physics and interaction modules. These screenshots highlight the **Simple Machines Lab**, where students learn about mechanical advantage through hands-on interaction.
 
 ### Module Selection & UI Design
-![Lab Selection Menu](./images/capstone-menu.png)
+![Lab Selection Menu](Assets/Imgs/VR%20Screen%20-%2001.png)
 *The sleek, diegetic user interface allowing students to choose between different physics experiments (The Lever, The Pulley, Inclined Plane). The UI utilizes depth and transparency to remain unobtrusive in the virtual environment.*
 
 ### Physics Interactions: The Lever
-![Lever Interaction](./images/capstone-lever.png)
+![Lever Interaction](Assets/Imgs/VR%20Screen%20-%2002.png)
 *Real-time physics interaction. The user physically grabs and pushes down on the lever to lift a 100 kg water crate. The UI dynamically updates to show the applied effort versus mechanical advantage.*
 
 ### Real-Time HUD & Feedback
-![Lever HUD](./images/capstone-hud.png)
+![Lever HUD](Assets/Imgs/VR%20Screen%20-%2003.png)
 *As the user pulls the lever, a floating Heads-Up Display tracks the exact units of effort required, visually demonstrating how moving the fulcrum alters the required force.*
 
 ### Gamified Learning & Analytics
-![Completion Screen 1](./images/capstone-completion1.png)
+![Completion Screen 1](Assets/Imgs/VR%20Screen%20-%2004.png)
 *Upon successfully completing an experiment, the system calculates the student's efficiency and presents a gamified 3-star completion screen.*
 
 ### Pedagogical Reinforcement
-![Completion Screen 2](./images/capstone-completion2.png)
+![Completion Screen 2](Assets/Imgs/VR%20Screen%20-%2005.png)
 *The completion screen doesn't just grade the student; it reinforces the core lesson ("Moving the fulcrum closer to the load shortens the load arm..."), bridging the gap between physical interaction and theoretical physics equations.*
 
 ---
