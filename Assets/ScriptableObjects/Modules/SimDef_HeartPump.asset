@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2a15c7305524c1da241e381ad359f8, type: 3}
+  m_Name: SimDef_HeartPump
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.SimulationData
+  SimulationId: 3
+  TitleEN: The Heart Pump
+  TitleRW: The Heart Pump
+  DescriptionEN: description
+  DescriptionRW: ubusobanuro
+  BadgeNumber: 1
+  SceneName: BloodCirc_HeartPump
+  IsLocked: 0
+  Thumbnail: {fileID: 21300000, guid: 7e45b5b7749d93e4baa70a7908635dcc, type: 3}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556157ba6fd4141a38842ea7fa6c1a9e, type: 3}
+  m_Name: CourseDef_BreathingMechanics
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.CourseData
+  CourseId: 2
+  TitleEN: Breathing Mechanics
+  TitleRW: Ukuntu Duhumeka
+  UnitLabel: "SET P6 \xB7 Unit 4"
+  DescriptionEN: description
+  DescriptionRW: ubusonanuro
+  CardColor: {r: 0.089915805, g: 0.06808472, b: 0.9622642, a: 0.7294118}
+  BadgeNumber: 3
+  Simulations: []

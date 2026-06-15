@@ -28,6 +28,10 @@
     { "key": "module_simbuilder_title",      "value": "Simulation Builder" },
     { "key": "module_simbuilder_desc",       "value": "Build your own programmes with drag-and-drop blocks." },
     { "key": "module_arworksheet_title",     "value": "AR Worksheet" },
-    { "key": "module_arworksheet_desc",      "value": "Point your tablet at the worksheet to bring it to life!" }
+    { "key": "module_arworksheet_desc",      "value": "Point your tablet at the worksheet to bring it to life!" },
+    { "key": "course_selection_title",       "value": "Choose a Scene" },
+    { "key": "course_selection_subtitle",    "value": "Primary 6 · SET curriculum" },
+    { "key": "btn_play_experiment",          "value": "Play" },
+    { "key": "lbl_locked",                   "value": "Locked" }
   ]
 }

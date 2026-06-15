@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556157ba6fd4141a38842ea7fa6c1a9e, type: 3}
+  m_Name: CourseDef_SimpleMachines
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.CourseData
+  CourseId: 0
+  TitleEN: Simple Machines
+  TitleRW: Imashini Yoroshye
+  UnitLabel: "SET P6 \xB7 Unit 2"
+  DescriptionEN: Description
+  DescriptionRW: Ubusobanuro
+  CardColor: {r: 0, g: 1, b: 0.9604408, a: 0.7529412}
+  BadgeNumber: 1
+  BannerImage: {fileID: 0}
+  Simulations:
+  - {fileID: 11400000, guid: c13c7fe32b8e54fe99c7eff0027a57d5, type: 2}
+  - {fileID: 11400000, guid: 256903b4435c74b0e999648c965f5cc8, type: 2}
+  - {fileID: 11400000, guid: ca7fa33f7051e413ca249233c8758d0b, type: 2}

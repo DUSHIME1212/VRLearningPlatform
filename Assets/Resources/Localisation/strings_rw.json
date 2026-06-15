@@ -28,6 +28,10 @@
     { "key": "module_simbuilder_title",      "value": "Ubwubatsi bwa Simulation" },
     { "key": "module_simbuilder_desc",       "value": "Bura porogaramu zawe ukoresheje blocks." },
     { "key": "module_arworksheet_title",     "value": "Urupapuro rwa AR" },
-    { "key": "module_arworksheet_desc",      "value": "Rereka tablet yawe ku rupapuro ureba ubuzima!" }
+    { "key": "module_arworksheet_desc",      "value": "Rereka tablet yawe ku rupapuro ureba ubuzima!" },
+    { "key": "course_selection_title",       "value": "Hitamo Inyigisho" },
+    { "key": "course_selection_subtitle",    "value": "Indangagaciro y'Amashuri — SET" },
+    { "key": "btn_play_experiment",          "value": "Kina" },
+    { "key": "lbl_locked",                   "value": "Bifunze" }
   ]
 }
