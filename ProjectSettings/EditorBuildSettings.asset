@@ -11,13 +11,40 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BasicScene.unity
     guid: 4e9fef26e6adb88479ad1b9834a32d94
+  - enabled: 1
+    path: Assets/Scenes/Experiments/SimpleMachines_Lever.unity
+    guid: d8d609f4936ef4f4ebce5a80dd188eeb
+  - enabled: 1
+    path: Assets/Scenes/Experiments/SimpleMachines_Pulley.unity
+    guid: 4ac497b0cfdf44080978617303e1ff4f
+  - enabled: 1
+    path: Assets/Scenes/Experiments/SimpleMachines_InclinedPlane.unity
+    guid: c772e11536ea74853b7688030bf742da
+  - enabled: 1
+    path: Assets/Scenes/Experiments/BloodCirc_HeartPump.unity
+    guid: 690e1f01cb3cf4df3865171908a29fde
+  - enabled: 1
+    path: Assets/Scenes/Experiments/BloodCirc_ArterialFlow.unity
+    guid: ff054bdfbd5ac47d7bbb47e2fb23c345
+  - enabled: 1
+    path: Assets/Scenes/Experiments/BloodCirc_Capillary.unity
+    guid: 8453297661341414d9800985353173c7
+  - enabled: 1
+    path: Assets/Scenes/Experiments/Breathing_LungExpansion.unity
+    guid: a7cc455229a464e5a9a8b73970af9542
+  - enabled: 1
+    path: Assets/Scenes/Experiments/Breathing_Diaphragm.unity
+    guid: 55459d020403a4d69b1dcf8f7a151510
+  - enabled: 1
+    path: Assets/Scenes/Experiments/Breathing_GasExchange.unity
+    guid: 7cf1cb576d31c4cd499f0f0be9ee9647
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 9bec1ce6a03ccba4b9a8215241b32e63, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: a49cadc1a815591479693b955ccf08c1, type: 2}
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 985fdffee33a5944396199c6b7145dd4, type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 908d62378b8205449861e5838a18a596, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4b3de149e50ea0c4f8ad04c79b9f12ec, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: b716680a41c7a094fa3b7fb9a8024a67, type: 2}
-  m_UseUCBPForAssetBundles: 0

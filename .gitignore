@@ -115,3 +115,7 @@ GeneratedSoundBanks/
 SoundBanksInfo.xml/[Ll]ibrary/
 *.obj
 *.bin
+
+# Claude Code
+.claude/
+CLAUDE.md
