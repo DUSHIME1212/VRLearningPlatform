@@ -23,15 +23,10 @@ namespace VRLearning.UI
         [SerializeField] private Button          backButton;
         [SerializeField] private Button          playButton;
         [SerializeField] private TextMeshProUGUI playButtonLabel;
+        [SerializeField] private SceneNavigator  navigator;
 
         private SimulationData _selectedSim;
         private readonly List<SimulationCardUI> _cards = new();
-        private SceneNavigator _navigator;
-
-        private void Awake()
-        {
-            _navigator = FindObjectOfType<SceneNavigator>();
-        }
 
         public void Bind(CourseData course, System.Action onBack)
         {
@@ -77,8 +72,8 @@ namespace VRLearning.UI
             playButton.interactable = !sim.IsLocked;
             playButton.onClick.RemoveAllListeners();
 
-            if (!sim.IsLocked && _navigator != null)
-                playButton.onClick.AddListener(() => _navigator.LoadSceneByName(sim.SceneName));
+            if (!sim.IsLocked && navigator != null)
+                playButton.onClick.AddListener(() => navigator.LoadSceneByName(sim.SceneName));
         }
     }
 }
