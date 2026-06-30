@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5250fb6cac847549a4c63c1e89e040b, type: 3}
+  m_Name: ModuleDef_CodeWorld
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.ModuleDefinition
+  ModuleId: code_world
+  TitleKey: module_codeworld_title
+  DescriptionKey: module_codeworld_desc
+  ModuleIcon: {fileID: 0}
+  CurriculumAlignment: "Rwanda ICT P3\u2013P4 \u2013 Sequencing, Loops, Conditions"
+  MinAgeGroup: 0
+  LearningObjectiveKeys:
+  - obj_cw_sequence
+  - obj_cw_loop
+  - obj_cw_condition
+  Puzzles:
+  - {fileID: 11400000, guid: e291612bbc13ac14b931ee8e9a8191ee, type: 2}
+  - {fileID: 11400000, guid: d0b4c08cc19d58d428ddbeac23001882, type: 2}
+  - {fileID: 11400000, guid: 62d737af9bf778f46b458d92fcfede6c, type: 2}
+  - {fileID: 11400000, guid: 500af36b975edaf45947da7dac3f26e3, type: 2}
+  - {fileID: 11400000, guid: f25f4993a6e6cc5489bb90a67422c7be, type: 2}
+  PassThreshold: 0.6
+  CompletionBadge: {fileID: 0}
+  CompletionJingle: {fileID: 0}

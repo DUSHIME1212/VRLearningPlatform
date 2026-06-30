@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5244137d91014a843a81539c1b441a0f, type: 3}
+  m_Name: PuzzleDef_HeartPump
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Simulation.PuzzleDefinition
+  PuzzleId: bio_heart
+  ModuleId: blood_circulation
+  TitleKey: exp_heart_title
+  DescriptionKey: 
+  Difficulty: 0
+  CorrectSequence: 
+  Hints:
+  - hint_heart_1
+  - hint_heart_2
+  SuccessClip: {fileID: 0}
+  FailureClip: {fileID: 0}
+  ThreeStarTimeLimit: 60

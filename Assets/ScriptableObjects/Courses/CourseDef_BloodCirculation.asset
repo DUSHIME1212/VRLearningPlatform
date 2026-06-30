@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556157ba6fd4141a38842ea7fa6c1a9e, type: 3}
   m_Name: CourseDef_BloodCirculation
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.CourseData
-  CourseId: 1
+  CourseId: blood_circulation
   TitleEN: Blood Circulation
   TitleRW: Inzira y'Amaraso
-  UnitLabel: "SET P6 \xB7 Unit 4"
-  DescriptionEN: Description
-  DescriptionRW: Ubusobanuro
-  CardColor: {r: 0.12318943, g: 1, b: 0.023584902, a: 0.65882355}
-  BadgeNumber: 2
-  Simulations: []
+  UnitLabel: "Primary 4\u20135 \xB7 Biology"
+  DescriptionEN: Explore how the heart pumps blood through arteries and capillaries.
+  DescriptionRW: Suzuma uburyo umutima usukura amaraso mu miruka n'imiruka mike.
+  CardColor: {r: 0.75, g: 0.22, b: 0.17, a: 1}
+  BadgeNumber: 3
+  BannerImage: {fileID: 0}
+  Simulations:
+  - {fileID: 11400000, guid: 958b93d9155af416e89ecbf81802b8f1, type: 2}
+  - {fileID: 11400000, guid: d3427207d17afd846a239388800a95bf, type: 2}
+  - {fileID: 11400000, guid: 48e85a87a1a95364b8cbaf8117dd097d, type: 2}

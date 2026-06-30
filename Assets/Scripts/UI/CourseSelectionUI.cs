@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace VRLearning.UI
 {
@@ -22,6 +24,20 @@ namespace VRLearning.UI
         private void Awake()
         {
             _detailUI = courseDetailPanel.GetComponent<CourseDetailUI>();
+            EnsureXRRaycaster();
+        }
+
+        private void EnsureXRRaycaster()
+        {
+            var canvas = GetComponentInParent<Canvas>(true);
+            if (canvas == null) return;
+            var root = canvas.rootCanvas != null ? canvas.rootCanvas : canvas;
+            if (root.GetComponent<TrackedDeviceGraphicRaycaster>() == null)
+            {
+                var legacy = root.GetComponent<GraphicRaycaster>();
+                if (legacy != null) Destroy(legacy);
+                root.gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
+            }
         }
 
         private void Start()

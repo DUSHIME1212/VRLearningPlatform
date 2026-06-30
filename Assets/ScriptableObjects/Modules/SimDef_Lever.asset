@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2a15c7305524c1da241e381ad359f8, type: 3}
   m_Name: SimDef_Lever
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.SimulationData
-  SimulationId: 0
+  SimulationId: sm_lever
   TitleEN: The Lever
   TitleRW: Inkoni
-  DescriptionEN: description english
-  DescriptionRW: ubusobanuro kinyarwanda
+  DescriptionEN: Use the lever and weights to explore mechanical advantage.
+  DescriptionRW: Koresha inkoni n'ibiremba kugira ngo usuzume inyungu za mekanika.
   BadgeNumber: 1
   SceneName: SimpleMachines_Lever
   IsLocked: 0

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 public static class UIBuilder
 {
@@ -364,7 +365,7 @@ public static class UIBuilder
         var rt = canvasGO.GetComponent<RectTransform>();
         rt.sizeDelta    = new Vector2(1200, 900);
         rt.localScale   = Vector3.one * 0.001f;
-        canvasGO.AddComponent<GraphicRaycaster>();
+        canvasGO.AddComponent<TrackedDeviceGraphicRaycaster>();
         canvasGO.AddComponent<VRLearning.UIManager>();
 
         // Helper: creates a full-stretch semi-transparent panel with a CanvasGroup
@@ -445,7 +446,7 @@ public static class UIBuilder
         var rootRT = canvasGO.GetComponent<RectTransform>();
         rootRT.sizeDelta  = new Vector2(1200, 900);
         rootRT.localScale = Vector3.one * 0.001f;
-        canvasGO.AddComponent<GraphicRaycaster>();
+        canvasGO.AddComponent<TrackedDeviceGraphicRaycaster>();
         canvasGO.AddComponent<CanvasGroup>();
 
         var selUI = canvasGO.AddComponent<VRLearning.UI.CourseSelectionUI>();
@@ -579,7 +580,7 @@ public static class UIBuilder
         cDescTMP.text       = "Explore the world of simple machines.";
         cDescTMP.fontSize   = 15;
         cDescTMP.color      = new Color(0.85f, 0.85f, 0.85f);
-        cDescTMP.enableWordWrapping = true;
+        cDescTMP.textWrappingMode = TMPro.TextWrappingModes.Normal;
         cDescTMP.raycastTarget = false;
 
         // Sim cards container

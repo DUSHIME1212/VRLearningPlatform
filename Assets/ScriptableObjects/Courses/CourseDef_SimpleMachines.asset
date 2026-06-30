@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556157ba6fd4141a38842ea7fa6c1a9e, type: 3}
   m_Name: CourseDef_SimpleMachines
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.CourseData
-  CourseId: 0
+  CourseId: simple_machines
   TitleEN: Simple Machines
-  TitleRW: Imashini Yoroshye
-  UnitLabel: "SET P6 \xB7 Unit 2"
-  DescriptionEN: Description
-  DescriptionRW: Ubusobanuro
-  CardColor: {r: 0, g: 1, b: 0.9604408, a: 0.7529412}
-  BadgeNumber: 1
+  TitleRW: Ibikoresho Byoroheje
+  UnitLabel: "Primary 5\u20136 \xB7 Science"
+  DescriptionEN: Explore levers, pulleys and inclined planes in a hands-on VR lab.
+  DescriptionRW: Suzuma inkoni, iguruka n'inzira yagenewe mu laboratoire ya VR.
+  CardColor: {r: 0.91, g: 0.63, b: 0.13, a: 1}
+  BadgeNumber: 2
   BannerImage: {fileID: 0}
   Simulations:
   - {fileID: 11400000, guid: c13c7fe32b8e54fe99c7eff0027a57d5, type: 2}

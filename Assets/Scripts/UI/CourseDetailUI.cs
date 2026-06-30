@@ -28,6 +28,13 @@ namespace VRLearning.UI
         private SimulationData _selectedSim;
         private readonly List<SimulationCardUI> _cards = new();
 
+        private void Awake()
+        {
+            if (navigator == null)
+                navigator = GetComponentInParent<SceneNavigator>(true)
+                            ?? gameObject.AddComponent<SceneNavigator>();
+        }
+
         public void Bind(CourseData course, System.Action onBack)
         {
             _selectedSim = null;

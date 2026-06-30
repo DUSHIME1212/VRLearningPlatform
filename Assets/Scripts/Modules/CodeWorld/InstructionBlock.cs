@@ -42,7 +42,7 @@ namespace VRLearning.Modules.CodeWorld
 
         private void OnReleased(SelectExitEventArgs args)
         {
-            var slots = FindObjectsByType<InstructionSlot>(FindObjectsSortMode.None);
+            var slots = FindObjectsByType<InstructionSlot>(FindObjectsInactive.Exclude);
             InstructionSlot closest = null;
             float minDist = snapRadius;
 

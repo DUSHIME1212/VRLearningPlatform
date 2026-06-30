@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2a15c7305524c1da241e381ad359f8, type: 3}
   m_Name: SimDef_HeartPump
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.SimulationData
-  SimulationId: 3
+  SimulationId: blood_heart_pump
   TitleEN: The Heart Pump
-  TitleRW: The Heart Pump
-  DescriptionEN: description
-  DescriptionRW: ubusobanuro
+  TitleRW: Inzira y'Umutima
+  DescriptionEN: Explore how the heart's four chambers pump blood around the body.
+  DescriptionRW: Suzuma uburyo inzira enye z'umutima zisukura amaraso mu mubiri.
   BadgeNumber: 1
   SceneName: BloodCirc_HeartPump
   IsLocked: 0

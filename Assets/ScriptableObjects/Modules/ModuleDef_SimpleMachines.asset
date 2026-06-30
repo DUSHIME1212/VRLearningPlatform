@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5250fb6cac847549a4c63c1e89e040b, type: 3}
+  m_Name: ModuleDef_SimpleMachines
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.ModuleDefinition
+  ModuleId: simple_machines
+  TitleKey: module_simplemachines_title
+  DescriptionKey: module_simplemachines_desc
+  ModuleIcon: {fileID: 0}
+  CurriculumAlignment: "Rwanda Science P5\u2013P6 \u2013 Force and Motion"
+  MinAgeGroup: 1
+  LearningObjectiveKeys:
+  - obj_sm_lever
+  - obj_sm_pulley
+  - obj_sm_incline
+  Puzzles:
+  - {fileID: 11400000, guid: 9b5e86d79d3b71c44abe1f3e7242ccbe, type: 2}
+  - {fileID: 11400000, guid: f077faea1d874d647950576c4bb496e5, type: 2}
+  - {fileID: 11400000, guid: 724a295465dedac42b033cd0cec45344, type: 2}
+  PassThreshold: 0.6
+  CompletionBadge: {fileID: 0}
+  CompletionJingle: {fileID: 0}

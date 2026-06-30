@@ -36,7 +36,7 @@ namespace VRLearning.UI
             titleText.text       = rw ? data.TitleRW       : data.TitleEN;
             descriptionText.text = rw ? data.DescriptionRW : data.DescriptionEN;
 
-            lockIcon.SetActive(data.IsLocked);
+            if (lockIcon != null) lockIcon.SetActive(data.IsLocked);
 
             if (thumbnailImage != null)
             {

@@ -250,7 +250,9 @@ public static class SceneBuilder
         bcRT.sizeDelta  = new Vector2(340, 80);
         bcRT.localScale = Vector3.one * 0.001f;
         bcRT.position   = new Vector3(0, 1.35f, 1.8f);
-        btnCanvas.AddComponent<GraphicRaycaster>();
+        // XR ray/poke interactors can only click world-space UI through a
+        // TrackedDeviceGraphicRaycaster; a plain GraphicRaycaster never registers the click.
+        btnCanvas.AddComponent<TrackedDeviceGraphicRaycaster>();
 
         var nav = btnCanvas.AddComponent<SceneNavigator>();
 

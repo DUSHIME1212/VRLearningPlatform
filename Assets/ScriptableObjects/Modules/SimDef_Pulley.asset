@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2a15c7305524c1da241e381ad359f8, type: 3}
   m_Name: SimDef_Pulley
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.SimulationData
-  SimulationId: 1
+  SimulationId: sm_pulley
   TitleEN: The Pulley
   TitleRW: Iguruka
-  DescriptionEN: descrption
-  DescriptionRW: ubusobanuro
+  DescriptionEN: Spin a wheel to lift heavy loads with less effort.
+  DescriptionRW: Vugurura umuzunguruko kuzamura umutwaro munini wishize ingufu.
   BadgeNumber: 2
   SceneName: SimpleMachines_Pulley
   IsLocked: 0

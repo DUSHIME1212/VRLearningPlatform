@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2a15c7305524c1da241e381ad359f8, type: 3}
   m_Name: SimDef_InclinedPlane
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.SimulationData
-  SimulationId: 
-  TitleEN: 
-  TitleRW: 
-  DescriptionEN: 
-  DescriptionRW: 
-  BadgeNumber: 0
-  SceneName: 
+  SimulationId: sm_inclined_plane
+  TitleEN: Inclined Plane
+  TitleRW: Inzira Yagenewe
+  DescriptionEN: Control friction on a ramp to slide a block to the bottom.
+  DescriptionRW: Genzura gutsindagira kuri ramp kugira ngo ukorere igice hasi.
+  BadgeNumber: 3
+  SceneName: SimpleMachines_InclinedPlane
   IsLocked: 0
   Thumbnail: {fileID: 0}

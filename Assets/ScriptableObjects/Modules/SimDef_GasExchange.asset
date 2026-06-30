@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f2a15c7305524c1da241e381ad359f8, type: 3}
+  m_Name: SimDef_GasExchange
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.SimulationData
+  SimulationId: breath_gas
+  TitleEN: Gas Exchange
+  TitleRW: Gusana kwa Gaze
+  DescriptionEN: See how oxygen enters blood and CO2 leaves at the alveoli.
+  DescriptionRW: Reba uburyo oxygen yinjira mu maraso naho CO2 ivishe mu mashumba.
+  BadgeNumber: 2
+  SceneName: Breathing_GasExchange
+  IsLocked: 0
+  Thumbnail: {fileID: 0}

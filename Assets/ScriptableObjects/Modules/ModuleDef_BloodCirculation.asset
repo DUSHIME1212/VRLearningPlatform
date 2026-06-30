@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5250fb6cac847549a4c63c1e89e040b, type: 3}
+  m_Name: ModuleDef_BloodCirculation
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.ModuleDefinition
+  ModuleId: blood_circulation
+  TitleKey: module_bloodcirc_title
+  DescriptionKey: module_bloodcirc_desc
+  ModuleIcon: {fileID: 0}
+  CurriculumAlignment: "Rwanda Biology P4\u2013P5 \u2013 Human Body Systems"
+  MinAgeGroup: 1
+  LearningObjectiveKeys:
+  - obj_bc_heart
+  - obj_bc_arteries
+  - obj_bc_capillaries
+  Puzzles:
+  - {fileID: 11400000, guid: 2f455d18803297347a69d514d9f1be05, type: 2}
+  - {fileID: 11400000, guid: 9bd4bf170b88e8c45a0fcb4b03d2c5ee, type: 2}
+  - {fileID: 11400000, guid: 220514157e1d91444809bdea73fb92f8, type: 2}
+  PassThreshold: 0.6
+  CompletionBadge: {fileID: 0}
+  CompletionJingle: {fileID: 0}

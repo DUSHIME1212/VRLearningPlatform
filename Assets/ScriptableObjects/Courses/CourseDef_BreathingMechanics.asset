@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556157ba6fd4141a38842ea7fa6c1a9e, type: 3}
   m_Name: CourseDef_BreathingMechanics
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.CourseData
-  CourseId: 2
+  CourseId: breathing_mechanics
   TitleEN: Breathing Mechanics
-  TitleRW: Ukuntu Duhumeka
-  UnitLabel: "SET P6 \xB7 Unit 4"
-  DescriptionEN: description
-  DescriptionRW: ubusonanuro
-  CardColor: {r: 0.089915805, g: 0.06808472, b: 0.9622642, a: 0.7294118}
-  BadgeNumber: 3
-  Simulations: []
+  TitleRW: Imiterere y'Guhumeka
+  UnitLabel: "Primary 4\u20135 \xB7 Biology"
+  DescriptionEN: Discover how lungs and the diaphragm bring oxygen into your body.
+  DescriptionRW: Menya uburyo ibihaha n'ingingo y'umwuka bizana oxygen mu mubiri.
+  CardColor: {r: 0.15, g: 0.68, b: 0.38, a: 1}
+  BadgeNumber: 4
+  BannerImage: {fileID: 0}
+  Simulations:
+  - {fileID: 11400000, guid: c860ac1c67921594485cab5b1503ffff, type: 2}
+  - {fileID: 11400000, guid: 4202bbc01e472614a8599a4f19264741, type: 2}
+  - {fileID: 11400000, guid: ad335866586e2ed4dac82a9d01ac85d7, type: 2}
