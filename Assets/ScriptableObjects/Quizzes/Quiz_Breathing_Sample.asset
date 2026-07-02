@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_Breathing_Sample
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_breathing_01
+  ModuleId: breathing
+  Title: Breathing & the Lungs
+  Questions:
+  - Question: Which muscle is the main driver of breathing?
+    Options:
+    - Diaphragm
+    - Biceps
+    - Heart
+    - Stomach
+    CorrectIndex: 0
+    Explanation: The diaphragm contracts and flattens to pull air into the lungs.
+  - Question: Where does gas exchange happen in the lungs?
+    Options:
+    - Trachea
+    - Alveoli
+    - Ribs
+    - Bronchi
+    CorrectIndex: 1
+    Explanation: Oxygen and CO2 are exchanged across the thin walls of the alveoli.
+  - Question: When you breathe IN, the diaphragm...
+    Options:
+    - Relaxes and rises
+    - Contracts and lowers
+    - Disappears
+    - Stops moving
+    CorrectIndex: 1
+    Explanation: On inhalation the diaphragm contracts downward, expanding the chest
+      cavity.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6
