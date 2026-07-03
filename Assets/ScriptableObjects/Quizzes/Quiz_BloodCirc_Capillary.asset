@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_BloodCirc_Capillary
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_capillary_01
+  ModuleId: blood_circulation
+  Title: Capillary Exchange
+  Questions:
+  - Question: Capillaries are the place where blood exchanges...
+    Options:
+    - Oxygen, nutrients and waste with cells
+    - Only water
+    - Sound and light
+    - Nothing at all
+    CorrectIndex: 0
+    Explanation: Capillaries connect arteries and veins and let materials pass between blood and tissue cells.
+  - Question: Capillary walls are only one cell thick so that...
+    Options:
+    - Gases can diffuse across easily
+    - They can carry more pressure
+    - Blood flows faster
+    - They look red
+    CorrectIndex: 0
+    Explanation: A very thin wall gives a short diffusion distance for oxygen and carbon dioxide.
+  - Question: Oxygen moves from a capillary into a tissue cell by...
+    Options:
+    - Diffusion
+    - Boiling
+    - Freezing
+    - Magnetism
+    CorrectIndex: 0
+    Explanation: Oxygen diffuses from where it is high (blood) to where it is low (cells).
+  - Question: Which waste gas do tissue cells release into the blood?
+    Options:
+    - Carbon dioxide
+    - Oxygen
+    - Nitrogen
+    - Helium
+    CorrectIndex: 0
+    Explanation: Cells produce carbon dioxide, which the blood carries back to the lungs.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

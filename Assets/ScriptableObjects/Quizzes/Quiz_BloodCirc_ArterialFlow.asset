@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_BloodCirc_ArterialFlow
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_arterialflow_01
+  ModuleId: blood_circulation
+  Title: Arterial Blood Flow
+  Questions:
+  - Question: Arteries carry blood in which direction?
+    Options:
+    - Away from the heart
+    - Towards the heart
+    - Only to the lungs
+    - In circles inside the heart
+    CorrectIndex: 0
+    Explanation: Arteries always carry blood away from the heart; veins bring it back.
+  - Question: What is the hollow space inside an artery where blood flows called?
+    Options:
+    - Lumen
+    - Endothelium
+    - Valve
+    - Capsule
+    CorrectIndex: 0
+    Explanation: The lumen is the central channel through which blood travels.
+  - Question: Artery walls are thick and muscular so they can withstand...
+    Options:
+    - High blood pressure
+    - Cold temperatures
+    - Bright light
+    - Loud sound
+    CorrectIndex: 0
+    Explanation: Blood leaves the heart under high pressure, so artery walls are strong and elastic.
+  - Question: The smooth inner lining of a blood vessel is called the...
+    Options:
+    - Endothelium
+    - Lumen
+    - Smooth muscle
+    - Plasma
+    CorrectIndex: 0
+    Explanation: The endothelium is a single layer of cells that reduces friction as blood flows.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

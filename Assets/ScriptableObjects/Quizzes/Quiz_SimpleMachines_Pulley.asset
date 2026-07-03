@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_SimpleMachines_Pulley
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_pulley_01
+  ModuleId: simple_machines
+  Title: The Pulley
+  Questions:
+  - Question: What does a single fixed pulley mainly change?
+    Options:
+    - The direction of the force
+    - The amount of energy
+    - The weight of the load
+    - The temperature
+    CorrectIndex: 0
+    Explanation: A single fixed pulley lets you pull down to lift up - it changes direction, not the force size.
+  - Question: What flexible part runs over the pulley wheel?
+    Options:
+    - Rope
+    - Beam
+    - Axle
+    - Gear
+    CorrectIndex: 0
+    Explanation: The rope wraps over the grooved wheel and carries the load.
+  - Question: Adding more pulleys in a block-and-tackle system...
+    Options:
+    - Reduces the effort force needed
+    - Increases the load weight
+    - Removes all friction
+    - Makes the rope shorter
+    CorrectIndex: 0
+    Explanation: More supporting rope sections share the load, so each pull needs less force.
+  - Question: With a pulley system, to lift the load with less force you must pull the rope...
+    Options:
+    - A greater distance
+    - A shorter distance
+    - The same distance
+    - Not at all
+    CorrectIndex: 0
+    Explanation: Mechanical advantage trades force for distance - less force but more rope pulled.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

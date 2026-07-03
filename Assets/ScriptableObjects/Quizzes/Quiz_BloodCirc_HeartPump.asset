@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_BloodCirc_HeartPump
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_heartpump_01
+  ModuleId: blood_circulation
+  Title: The Heart as a Pump
+  Questions:
+  - Question: How many chambers does the human heart have?
+    Options:
+    - Four
+    - Two
+    - Three
+    - Six
+    CorrectIndex: 0
+    Explanation: The heart has four chambers - two atria on top and two ventricles below.
+  - Question: Which chamber pumps oxygen-rich blood to the whole body?
+    Options:
+    - Left ventricle
+    - Right atrium
+    - Right ventricle
+    - Left atrium
+    CorrectIndex: 0
+    Explanation: The strong left ventricle pushes oxygenated blood out through the aorta to the body.
+  - Question: The largest artery that carries blood away from the heart is the...
+    Options:
+    - Aorta
+    - Vena cava
+    - Pulmonary vein
+    - Coronary vein
+    CorrectIndex: 0
+    Explanation: The aorta is the body's main artery, leaving the left ventricle.
+  - Question: What stops blood from flowing backwards inside the heart?
+    Options:
+    - Valves
+    - Muscles only
+    - Bones
+    - Nerves
+    CorrectIndex: 0
+    Explanation: Heart valves open one way and snap shut to keep blood moving in one direction.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

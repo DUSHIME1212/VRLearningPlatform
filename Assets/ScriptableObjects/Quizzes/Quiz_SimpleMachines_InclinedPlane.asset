@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_SimpleMachines_InclinedPlane
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_inclinedplane_01
+  ModuleId: simple_machines
+  Title: The Inclined Plane
+  Questions:
+  - Question: An inclined plane (ramp) makes lifting a load easier by...
+    Options:
+    - Spreading the work over a longer distance
+    - Removing the load's weight
+    - Creating extra energy
+    - Cooling the load
+    CorrectIndex: 0
+    Explanation: You do the same work but over a longer, gentler path, so less force is needed at any moment.
+  - Question: A gentler (less steep) ramp requires...
+    Options:
+    - Less effort force
+    - More effort force
+    - No effort at all
+    - The same as lifting straight up
+    CorrectIndex: 0
+    Explanation: The shallower the slope, the smaller the force needed - but the longer the distance.
+  - Question: What force opposes a block sliding along a ramp?
+    Options:
+    - Friction
+    - Gravity's pull upward
+    - Magnetism
+    - Air pressure
+    CorrectIndex: 0
+    Explanation: Friction acts between the block and ramp surface, resisting motion.
+  - Question: An inclined plane is an example of a...
+    Options:
+    - Simple machine
+    - Living organism
+    - Chemical reaction
+    - Source of energy
+    CorrectIndex: 0
+    Explanation: A ramp is one of the six classic simple machines.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

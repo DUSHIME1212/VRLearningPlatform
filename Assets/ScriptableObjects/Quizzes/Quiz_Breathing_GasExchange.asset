@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_Breathing_GasExchange
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_gasexchange_01
+  ModuleId: breathing
+  Title: Gas Exchange
+  Questions:
+  - Question: Gas exchange in the lungs happens in the...
+    Options:
+    - Alveoli
+    - Trachea
+    - Ribs
+    - Bronchi
+    CorrectIndex: 0
+    Explanation: The tiny air sacs called alveoli are where oxygen and carbon dioxide swap.
+  - Question: Oxygen passes from the alveoli into the...
+    Options:
+    - Blood in the capillaries
+    - Stomach
+    - Bones
+    - Skin
+    CorrectIndex: 0
+    Explanation: Oxygen diffuses across the alveolar wall into blood in the surrounding capillaries.
+  - Question: Alveoli walls are thin and moist to allow fast...
+    Options:
+    - Diffusion of gases
+    - Digestion of food
+    - Movement of bones
+    - Flow of electricity
+    CorrectIndex: 0
+    Explanation: A thin, moist surface lets gases dissolve and diffuse quickly.
+  - Question: Which gas is removed from the blood and breathed out?
+    Options:
+    - Carbon dioxide
+    - Oxygen
+    - Nitrogen
+    - Hydrogen
+    CorrectIndex: 0
+    Explanation: Carbon dioxide leaves the blood at the alveoli and is exhaled.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6
