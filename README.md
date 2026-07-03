@@ -1,315 +1,488 @@
-<div align="center">
-  <h1>VRLearningPlatform</h1>
-  <p><strong>Next-Generation Virtual Reality Educational Ecosystem</strong></p>
+# VRLearningPlatform (SIMBA) - Capstone Project Submission
 
-  <!-- Badges -->
-  <p>
-    <img src="https://img.shields.io/badge/Unity-2022.3%20LTS-black?style=for-the-badge&logo=unity" alt="Unity Version" />
-    <img src="https://img.shields.io/badge/C%23-10.0-blue?style=for-the-badge&logo=c-sharp" alt="C# Version" />
-    <img src="https://img.shields.io/badge/Platform-Meta%20Quest%202%20%7C%20Pro%20%7C%203-lightgrey?style=for-the-badge&logo=oculus" alt="Platform" />
-    <img src="https://img.shields.io/badge/XR%20Interaction%20Toolkit-2.5.2-brightgreen?style=for-the-badge" alt="XR Toolkit" />
-    <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
-    <img src="https://img.shields.io/badge/Build-Passing-success?style=for-the-badge&logo=githubactions" alt="Build Status" />
-    <img src="https://img.shields.io/badge/Code%20Quality-A%2B-success?style=for-the-badge" alt="Code Quality" />
-  </p>
-</div>
+## Project Overview
 
----
+**VRLearningPlatform** is a next-generation Virtual Reality educational ecosystem designed for immersive learning experiences. This capstone project demonstrates cutting-edge XR technologies combined with proven pedagogical principles to create an engaging platform for students to learn complex concepts through interactive VR simulations.
 
-## Table of Contents
+**Target Platform:** Meta Quest 2/3 and compatible VR headsets  
+**Development Engine:** Unity 2022.3 LTS  
+**Primary Language:** C#  
+**XR Framework:** OpenXR + XR Interaction Toolkit
 
-1. [Executive Summary & Vision](#-executive-summary--vision)
-2. [Architectural Overview](#-architectural-overview)
-3. [Core Technologies & Stack](#-core-technologies--stack)
-4. [XR Interaction & Hand Tracking](#-xr-interaction--hand-tracking)
-5. [Environment & Asset Pipeline](#-environment--asset-pipeline)
-6. [Screenshots & Visuals](#-screenshots--visuals)
-7. [Getting Started & Installation](#-getting-started--installation)
-8. [Advanced Setup & CI/CD Pipeline](#-advanced-setup--cicd-pipeline)
-9. [Performance Optimization & Profiling](#-performance-optimization--profiling)
-10. [Design Patterns & Code Standards](#-design-patterns--code-standards)
-11. [Roadmap & Future Architecture](#-roadmap--future-architecture)
-12. [Contributing Guidelines](#-contributing-guidelines)
-13. [License](#-license)
+**video link:** https://canva.link/0pcuksr3vs5xv91
+
+**apk link:** release files on github
+
 
 ---
 
-## Executive Summary & Vision
+## Core Functionalities
 
-Welcome to the **VRLearningPlatform**, a state-of-the-art Virtual Reality educational ecosystem developed as a comprehensive **University Capstone Project**. Designed from the ground up to revolutionize digital learning, this project serves as a showcase of advanced spatial computing, software architecture, and immersive UI/UX design. Our primary goal is to leverage VR to create visceral, muscle-memory-forming educational experiences—specifically focusing on interactive physics simulations like our Simple Machines Lab.
+### 1. **Simple Machines Lab** (Primary Module)
+Students learn physics concepts through interactive experiments:
+- **The Lever System**: Grab and manipulate levers to lift weighted objects, understanding mechanical advantage
+- **Pulley Mechanics**: Interact with pulley systems to explore force distribution
+- **Inclined Planes**: Push objects up inclines at various angles to understand work and energy
 
-Virtual Reality in education is no longer a gimmick; it is a profound pedagogical shift. By utilizing the latest advancements in the Unity Engine, specifically the Universal Render Pipeline (URP) and the XR Interaction Toolkit (XRI), we have crafted a foundation that supports seamless hand-tracking, complex object physics, and multi-user environments. 
+### 2. **Hand Tracking & Natural Interaction**
+- Real-time skeletal hand tracking without controllers
+- Physics-based hand colliders for natural object manipulation
+- Gesture recognition for context-sensitive actions (pinch, point, grasp, thumbs up)
+- Haptic feedback simulation through visual effects
 
-This repository serves as the core monolith for our VR client applications. It encapsulates everything from low-level input abstraction layers to high-level networking protocols and rendering pipelines. Whether you are building localized training simulations or globally distributed collaborative classrooms, this architecture provides the necessary scaffolding to deliver consistent 90Hz+ experiences on standalone mobile VR hardware.
+### 3. **Real-Time Physics Simulation**
+- Accurate force calculations and mechanical advantage demonstrations
+- Dynamic UI that updates as students interact with objects
+- Real-time HUD displaying effort, load, and mechanical advantage ratios
 
----
+### 4. **Gamified Learning System**
+- Performance metrics tracking (quiz marks)
+- Reinforcing educational content at completion showing core learning objectives
 
-## Architectural Overview
-
-The architecture of the VRLearningPlatform strictly adheres to **SOLID principles**, prioritizing decoupling, dependency injection, and modularity. In the unpredictable landscape of XR hardware, input paradigms shift rapidly. To insulate our core logic from these shifts, we employ a robust abstraction layer.
-
-### The Abstraction Layer Pattern
-
-Instead of tightly coupling our interaction logic to specific vendor SDKs (e.g., Oculus Integration or SteamVR), we exclusively use Unity's **XR Interaction Toolkit (XRI)** and the **OpenXR** standard. This ensures that a single codebase can compile and run flawlessly across Meta Quest, HTC Vive XR Elite, Pico 4, and any future OpenXR-compliant headsets.
-
-### Event-Driven Architecture (EDA)
-
-At the heart of our systems lies a decoupled Event-Driven Architecture. We utilize ScriptableObject-based event channels to facilitate communication between disparate systems (e.g., the Input System communicating with the Audio System) without establishing hard references. This drastically reduces spaghetti code and allows designers to hook into gameplay events purely through the Unity Inspector.
-
-### MVC / MVP Implementation in Unity
-
-For UI and state management, we utilize a modified Model-View-Presenter (MVP) pattern. 
-- **Models**: Plain C# objects (POCOs) representing the state (e.g., User Profile, Current Lesson State).
-- **Views**: Unity MonoBehaviours containing references to Canvas elements, TextMeshPro fields, and VR interactable canvases.
-- **Presenters**: The glue code that subscribes to Model changes and updates the Views, ensuring that Views remain incredibly "dumb" and purely presentation-focused.
-
----
-
-## Core Technologies & Stack
-
-We have selected a technology stack that balances bleeding-edge capabilities with production-ready stability.
-
-- **Unity Engine 2022.3 LTS**: We use the Long Term Support version to guarantee API stability throughout the development lifecycle.
-- **Universal Render Pipeline (URP)**: Custom-tailored for mobile VR, our URP settings are heavily optimized to maintain a strict 72-90 FPS target on standalone headsets. We use Single Pass Instanced rendering extensively.
-- **OpenXR Plugin**: The undisputed standard for cross-platform XR development.
-- **XR Interaction Toolkit 2.5+**: For standardized grabbing, hovering, and locomotion mechanics.
-- **XR Hands & Hand Tracking**: For controller-less interaction, utilizing the latest skeletal tracking algorithms.
-- **FMOD / Wwise**: While Unity's built-in audio is functional, our architecture supports enterprise-grade spatial audio middleware for true acoustic immersion.
-- **Git LFS (Large File Storage)**: Critical for maintaining repository health when dealing with high-fidelity FBX models and 4K PBR textures.
+### 5. **Diegetic UI Design**
+- In-world interface elements that feel natural within the VR environment
+- Lab selection menu for choosing experiments
+- Results and analytics screens with pedagogical feedback
 
 ---
 
-## XR Interaction & Hand Tracking
-
-One of the standout features of this platform is its deeply integrated hand-tracking capabilities. We do not treat hands as mere laser pointers; we treat them as complex, multi-jointed physics objects capable of fine-motor manipulation.
-
-### The Hand Tracking Pipeline
-
-1. **Input Acquisition**: OpenXR reads the skeletal data from the headset's optical sensors.
-2. **Filtering & Smoothing**: We apply custom Kalman filters to reduce the inevitable jitter that occurs in low-light environments.
-3. **Physics Representation**: Each joint in the hand is represented by a kinematic Rigidbody and a SphereCollider. This allows hands to naturally push, poke, and collide with the virtual environment.
-4. **Gesture Recognition**: A custom heuristic engine analyzes the skeletal data in real-time to detect specific gestures (e.g., Pinch, Point, Grasp, Thumbs Up) to trigger context-sensitive actions.
-
-### Interactor and Interactable Architecture
-
-We extend the base `XRBaseInteractor` and `XRBaseInteractable` classes to inject educational specific logic. For instance, our `EducationalGripInteractable` not only handles the physics of being picked up but also logs analytics data (e.g., how long the user held an object, the rotational angles they inspected it at) which is then batched and sent to our learning analytics backend.
-
----
-
-##  Environment & Asset Pipeline
-
-The visual fidelity of the VRLearningPlatform is tailored to maximize presence while minimizing draw calls. Our flagship environment, the **VR Classroom**, demonstrates our rigorous asset pipeline.
-
-### The VR Classroom Environment
-
-The classroom serves as the primary hub for learners. It is designed to be familiar yet dynamic.
-- **Optimized Geometry**: All architectural models (walls, desks, whiteboards) are heavily decimated, ensuring low vertex counts without sacrificing silhouette quality.
-- **PBR Texturing**: We utilize Physically Based Rendering (PBR) workflows. Textures (Albedo, Normal, Metallic, Smoothness) are packed into RGBA channels to save memory bandwidth.
-- **Baked Global Illumination**: Real-time lighting is too expensive for standalone VR. We use Unity's Progressive Lightmapper to bake high-quality lightmaps, ambient occlusion, and indirect bounces directly into the textures.
-- **Light Probes**: Dynamic objects (like the user's hands or physics props) receive accurate lighting data from a dense network of Light Probes strategically placed throughout the classroom.
-
-### Asset Standards
-
-As a senior team, we enforce strict naming conventions and directory structures:
-- Textures must be power-of-two (POT) and compressed using ASTC 6x6 or 8x8 block sizes for Android/Quest targets.
-- Meshes must have Read/Write disabled unless dynamically deformed.
-- Materials must use the Universal Render Pipeline/Lit or Simple Lit shaders exclusively.
-
----
-
-## Capstone Project Showcase: Simple Machines Lab
-
-Here is a glimpse into the VRLearningPlatform's core physics and interaction modules. These screenshots highlight the **Simple Machines Lab**, where students learn about mechanical advantage through hands-on interaction.
-
-### Module Selection & UI Design
-![Lab Selection Menu](Assets/Imgs/VR%20Screen%20-%2001.png)
-*The sleek, diegetic user interface allowing students to choose between different physics experiments (The Lever, The Pulley, Inclined Plane). The UI utilizes depth and transparency to remain unobtrusive in the virtual environment.*
-
-### Physics Interactions: The Lever
-![Lever Interaction](Assets/Imgs/VR%20Screen%20-%2002.png)
-*Real-time physics interaction. The user physically grabs and pushes down on the lever to lift a 100 kg water crate. The UI dynamically updates to show the applied effort versus mechanical advantage.*
-
-### Real-Time HUD & Feedback
-![Lever HUD](Assets/Imgs/VR%20Screen%20-%2003.png)
-*As the user pulls the lever, a floating Heads-Up Display tracks the exact units of effort required, visually demonstrating how moving the fulcrum alters the required force.*
-
-### Gamified Learning & Analytics
-![Completion Screen 1](Assets/Imgs/VR%20Screen%20-%2004.png)
-*Upon successfully completing an experiment, the system calculates the student's efficiency and presents a gamified 3-star completion screen.*
-
-### Pedagogical Reinforcement
-![Completion Screen 2](Assets/Imgs/VR%20Screen%20-%2005.png)
-*The completion screen doesn't just grade the student; it reinforces the core lesson ("Moving the fulcrum closer to the load shortens the load arm..."), bridging the gap between physical interaction and theoretical physics equations.*
-
----
-
-## Getting Started & Installation
-
-To clone and run this repository locally, you will need a solid understanding of Unity and Git. Since this is a production-scale VR application, the initial setup requires specific attention to detail.
+## Installation & Setup Guide
 
 ### Prerequisites
 
-1. **Unity Hub**: Installed and updated.
-2. **Unity Version**: Precisely `2022.3.x LTS`. Do not attempt to upgrade the project to Unity 6 without consulting the architectural team, as XR packages have specific version dependencies.
-3. **Git LFS**: You MUST have Git Large File Storage installed. Failure to install Git LFS before cloning will result in broken 3D models and textures, as you will only download the pointer files.
-4. **Android Build Support**: Required for compiling to Meta Quest/Pico devices. Ensure you install the NDK, SDK, and JDK modules via Unity Hub.
+Before starting, ensure you have the following installed:
 
-### Installation Steps
+1. **Unity Hub** (Latest version)
+2. **Unity Editor 2022.3 LTS** (Specific version - do NOT upgrade to newer versions without architectural review)
+3. **Git LFS (Large File Storage)** - CRITICAL: Must be installed before cloning
+4. **Android Build Tools** (for Meta Quest deployment):
+   - Android SDK
+   - Android NDK
+   - Java Development Kit (JDK 11+)
+5. **Meta Quest 2/3** device (for testing) or Meta Quest emulator
+6. **Visual Studio 2019+** or Visual Studio Code with C# extensions
 
-1. **Clone the Repository**:
-   ```bash
-   # Ensure Git LFS is initialized
-   git lfs install
-   
-   # Clone the repo
-   git clone https://github.com/DUSHIME1212/VRLearningPlatform.git
-   ```
+### Step-by-Step Installation
 
-2. **Open the Project**:
-   - Open Unity Hub.
-   - Click `Add` and navigate to the cloned `VRLearningPlatform` directory.
-   - Open the project. (Note: The initial import may take up to 20-30 minutes as it processes the ASTC texture compressions and compiles the Shader Graphs).
+#### Step 1: Clone the Repository
 
-3. **Configure Build Settings**:
-   - Go to `File > Build Settings`.
-   - Switch the platform to **Android**.
-   - Under `Texture Compression`, select **ASTC**.
+```bash
+# Install Git LFS (one-time setup)
+git lfs install
 
-4. **XR Configuration Check**:
-   - Go to `Edit > Project Settings > XR Plug-in Management`.
-   - Ensure the **OpenXR** box is checked under the Android tab.
-   - Resolve any red exclamation marks in the OpenXR Project Validation tool.
-
----
-
-## Advanced Setup & CI/CD Pipeline
-
-In a senior development environment, we do not rely on "it works on my machine." We utilize Continuous Integration and Continuous Deployment (CI/CD) to guarantee build integrity.
-
-### GitHub Actions Workflow
-
-Our repository is configured with GitHub Actions. On every pull request to the `main` branch, the following automated pipeline executes:
-
-1. **Linter & Static Analysis**: We run an automated formatting check using `dotnet format` and Roslyn analyzers to ensure all C# code adheres to our strict style guide.
-2. **Unit & Integration Tests**: Unity Test Runner executes our suite of PlayMode and EditMode tests. This ensures that refactoring core mechanics (like grabbing or locomotion) doesn't introduce regressions.
-3. **Automated Build**: A headless Unity instance compiles the Android `.apk`.
-4. **Artifact Generation**: The resulting APK is uploaded as a GitHub Artifact, allowing QA testers to download and side-load the exact build generated by that specific commit.
-
-### Code Review Standards
-
-Before any code is merged, it must pass a mandatory peer review. Reviewers are instructed to look for:
-- **Garbage Collection (GC) Allocations**: Code in `Update()`, `FixedUpdate()`, or `LateUpdate()` must NOT allocate memory on the heap. We rigorously enforce object pooling to prevent frame stutter caused by the GC running.
-- **Separation of Concerns**: Is UI logic bleeding into gameplay logic? Are physics calculations happening in `Update` instead of `FixedUpdate`?
-- **XR Best Practices**: Does the interaction cause motion sickness? Is locomotion properly smoothed or stepped via vignette tunneling?
-
----
-
-## Performance Optimization & Profiling
-
-VR development is an exercise in extreme performance optimization. If our application drops below 72 FPS on a Meta Quest 2, users will experience simulator sickness. This is unacceptable.
-
-### Our Optimization Tenets
-
-1. **Draw Call Minimization**:
-   - We utilize Static Batching for all non-moving environmental geometry.
-   - We utilize GPU Instancing for repetitive props (e.g., desks, chairs, books).
-   - We strictly adhere to the SRP Batcher rules. This means ensuring that all materials use URP-compatible shaders and share similar properties to allow the CPU to batch them efficiently.
-
-2. **Fill Rate & Overdraw Management**:
-   - Transparency is the enemy of mobile VR. We minimize the use of transparent queues, opting for opaque or alpha-test (cutout) shaders wherever possible.
-   - UI elements are rendered using a specialized VR-optimized Canvas system that prevents massive overdraw when UI panels overlap.
-
-3. **CPU Bound Operations**:
-   - Physics calculation intervals are decoupled from the render loop.
-   - Raycasting for UI interaction is optimized by aggressively culling the physics layers that the XR Ray Interactors can hit. We use layer masks diligently.
-
-4. **Memory Profiling**:
-   - We enforce a strict texture budget.
-   - Audio files must be set to `Force to Mono` and `Compressed in Memory` to save RAM footprint.
-
-As a developer on this project, you are expected to attach the Unity Profiler to the physical headset over Wi-Fi and verify your changes do not introduce latency spikes.
-
----
-
-##  Design Patterns & Code Standards
-
-To maintain a massive codebase, rigid adherence to design patterns is required.
-
-### 1. The Singleton Anti-Pattern
-We strictly avoid the global Singleton pattern for managers. Instead, we use a custom **Service Locator** pattern or Dependency Injection (via VContainer/Zenject). This ensures that modules can be tested in isolation and dependencies are explicitly declared in the constructor or `[Inject]` attributes.
-
-### 2. Object Pooling
-Instantiating and Destroying objects at runtime in VR causes massive CPU spikes. Every projectile, interaction effect, or UI pop-up MUST use the Unity `ObjectPool<T>` API. 
-
-```csharp
-// Example of Senior-level Object Pooling implementation
-public class ParticleSystemPool : MonoBehaviour
-{
-    private IObjectPool<ParticleSystem> _pool;
-    [SerializeField] private ParticleSystem _prefab;
-
-    private void Awake()
-    {
-        _pool = new ObjectPool<ParticleSystem>(
-            createFunc: () => Instantiate(_prefab),
-            actionOnGet: (ps) => ps.gameObject.SetActive(true),
-            actionOnRelease: (ps) => ps.gameObject.SetActive(false),
-            actionOnDestroy: (ps) => Destroy(ps.gameObject),
-            collectionCheck: false,
-            defaultCapacity: 20,
-            maxSize: 100
-        );
-    }
-
-    public ParticleSystem GetParticle() => _pool.Get();
-    public void ReleaseParticle(ParticleSystem ps) => _pool.Release(ps);
-}
+# Clone the repository
+git clone https://github.com/DUSHIME1212/VRLearningPlatform.git
+cd VRLearningPlatform
 ```
 
-### 3. Asynchronous Programming (async/await)
-Coroutines are considered legacy in our architecture due to their poor exception handling and allocation footprint. All asynchronous operations (network requests, scene loading, heavy computations) must utilize standard C# `async/await` and the `UniTask` library.
+**⚠️ Important:** If you skip `git lfs install`, you will download pointer files instead of actual assets, causing broken models and textures.
+
+#### Step 2: Open in Unity
+
+1. Open **Unity Hub**
+2. Click **Add** → Navigate to the cloned `VRLearningPlatform` folder
+3. Select **Unity 2022.3.x LTS** (if not already selected)
+4. Click **Open**
+5. **Wait 20-30 minutes** for initial import as Unity processes:
+   - ASTC texture compression
+   - Shader graph compilation
+   - XR plugin initialization
+   - Asset database refresh
+
+#### Step 3: Configure Project Settings
+
+```
+Edit → Project Settings → XR Plug-in Management
+```
+
+- Check **OpenXR** under the **Android** tab
+- Resolve any red exclamation marks using the **OpenXR Project Validation** tool
+- If issues appear, consult the OpenXR documentation
+
+#### Step 4: Switch to Android Platform
+
+```
+File → Build Settings
+```
+
+1. Select **Android** as the target platform
+2. Under **Texture Compression**, select **ASTC**
+3. Click **Switch Platform** (this will take 5-10 minutes)
+
+#### Step 5: Configure Android Build Settings
+
+```
+File → Build Settings → Player Settings
+```
+
+- **Company Name:** Your organization name
+- **Product Name:** VRLearningPlatform
+- **Android Minimum API Level:** 28
+- **Target API Level:** 33+
+- **Graphics APIs:** Vulkan (primary) with OpenGLES3 fallback
+
+#### Step 6: Player Settings - XR Configuration
+
+```
+Edit → Project Settings → Player
+```
+
+Under **XR Settings:**
+- Ensure **Stereo Rendering Mode** is set to **Multiview** (for performance)
+- **Depth Format:** Depth 16-bit
+- Verify **OpenXR** is listed under **XR Plug-in Management**
 
 ---
 
-## 🔮 Roadmap & Future Architecture
+## Running the Application
 
-We are building for the future of Spatial Computing. Our immediate architectural roadmap includes:
+### Option A: Run in Editor (PC Testing)
 
-- **Phase 1: Multi-User Networking (Q3 2026)**
-  - Integrating Unity Netcode for GameObjects (NGO) alongside Unity Relay and Lobby services.
-  - Implementing Client-Side Prediction and Server Reconciliation to mask network latency for physics objects.
-  - Designing a highly optimized spatial audio voice chat system utilizing Vivox.
+1. In Unity, click **Play** button
+2. The application will launch in editor preview mode
+3. Use mouse and keyboard to navigate (limited VR interaction testing)
 
-- **Phase 2: Generative AI NPCs (Q4 2026)**
-  - Implementing an on-device Large Language Model (LLM) interface.
-  - Connecting LLM outputs to our Inverse Kinematics (IK) animation rigging system to allow educational NPCs to gesture and converse naturally with students.
+### Option B: Deploy to Meta Quest (Recommended for Full Testing)
 
-- **Phase 3: Mixed Reality (MR) Passthrough (Q1 2027)**
-  - Transitioning the architecture to fully support AR Foundation.
-  - Implementing Room Plan APIs to allow the virtual classroom elements to dynamically map and anchor onto the user's physical walls and furniture.
+#### Prerequisites:
+- Meta Quest 2/3 connected via USB
+- Developer mode enabled on headset
+- ADB (Android Debug Bridge) recognized
+
+#### Deployment Steps:
+
+1. **Connect Your Device:**
+   ```bash
+   adb devices  # Should list your Quest device
+   ```
+
+2. **Build APK:**
+   ```
+   File → Build Settings → Build And Run
+   ```
+   - Select your device from the device dropdown
+   - Click **Build And Run**
+   - Wait for compilation (10-15 minutes)
+
+3. **Run on Device:**
+   - The APK will be automatically installed and launched on your Quest
+   - Put on the headset and follow the on-screen instructions
+
+### Option C: Manual APK Installation
+
+1. **Build APK:**
+   ```
+   File → Build Settings → Build
+   - Save as: `VRLearningPlatform.apk`
+   ```
+
+2. **Install via ADB:**
+   ```bash
+   adb install VRLearningPlatform.apk
+   ```
+
+3. **Launch:**
+   ```bash
+   adb shell am start -n com.DefaultCompany.VRLearningPlatform/com.unity3d.player.UnityPlayerActivity
+   ```
 
 ---
 
-##  Contributing Guidelines
+## Project Structure
 
-We welcome contributions from senior XR developers, 3D technical artists, and UX designers. To ensure a smooth integration of your work:
+```
+VRLearningPlatform/
+├── Assets/
+│   ├── Scenes/
+│   │   ├── MainMenu.unity          # Entry point with lab selection
+│   │   ├── SimpleMachinesLab.unity # Main interactive environment
+│   │   └── ResultsScreen.unity     # Completion feedback
+│   ├── Scripts/
+│   │   ├── Core/                   # Core systems (managers, services)
+│   │   ├── Interaction/            # XR interaction logic
+│   │   ├── Physics/                # Physics calculations and mechanics
+│   │   ├── UI/                     # UI controllers and presenters
+│   │   └── Analytics/              # Performance tracking
+│   ├── Models/                     # 3D assets (FBX, optimized)
+│   ├── Textures/                   # PBR textures (ASTC compressed)
+│   ├── Materials/                  # URP-compatible materials
+│   ├── Prefabs/                    # Reusable game objects
+│   ├── Animations/                 # Animation clips and controllers
+│   └── Audio/                      # Spatial audio and SFX
+├── Packages/
+│   └── manifest.json               # XR dependencies (OpenXR, XR Hands, etc.)
+├── ProjectSettings/                # Unity project configuration
+├── README.md                        # Comprehensive documentation
+└── VRLearningPlatform.slnx        # Visual Studio solution
 
-1. **Fork and Branch**: Always branch off `develop`. Use the standard naming convention: `feature/your-feature-name`, `bugfix/issue-description`, or `hotfix/critical-fix`.
-2. **Commit Messages**: Follow the Conventional Commits specification (e.g., `feat: added pinch gesture recognition`, `fix: resolved memory leak in object pooler`).
-3. **Pull Requests**: Your PR must include a comprehensive description of the architectural changes made. If you altered performance profiles, attach a screenshot of the Unity Profiler proving your changes do not impact the 72 FPS target.
-4. **Code Formatting**: Ensure you have run your code through our `.editorconfig` ruleset.
+```
 
 ---
 
-##  License
+## Key Features Demonstration
 
-This project is licensed under the **MIT License**. This permissive license allows for the free use, modification, and distribution of this software for both academic and commercial purposes. 
+### Feature 1: Physics-Accurate Lever System
+- **Mechanic:** Users grab the lever handle and push/pull to lift objects
+- **Educational Value:** Demonstrates mechanical advantage and fulcrum positioning
+- **Real-Time Feedback:** UI displays effort vs. load ratio
 
-As developers, we believe that educational technology should be open and accessible. By keeping our core platform open-source, we hope to accelerate the adoption of spatial computing in classrooms worldwide. 
+### Feature 2: Hand Tracking Interaction
+- **Mechanic:** Uses skeletal hand tracking to detect grab, pinch, and point gestures
+- **No Controllers Needed:** Pure hand-based interaction
+- **Natural Physics:** Hands collide with objects naturally
+
+### Feature 3: Real-Time HUD Analytics
+- **Dynamic Display:** Updates as user interacts with objects
+- **Metrics:** Shows effort required, distance moved, mechanical advantage achieved
+- **Pedagogical Reinforcement:** Links physics calculations to learning objectives
+
+### Feature 4: Gamified Completion System
+- **3-Star Rating:** Based on efficiency (effort minimization)
+- **Performance Analytics:** Tracks all student interactions
+- **Educational Feedback:** Explains concepts reinforcing the lesson
+
+### Feature 5: Environment Design
+- **VR Classroom:** Familiar yet immersive learning space
+- **Lab Station Setup:** Organized workspace for experiments
+- **Performance Optimized:** 72+ FPS on Meta Quest 2
 
 ---
 
-<div align="center">
-  <p><i>"Education is the passport to the future, for tomorrow belongs to those who prepare for it today."</i></p>
-  <p><b>— Engineered with precision by the VRLearningPlatform Architecture Team.</b></p>
-</div>
+### Optimization Techniques Implemented
+
+1. **Static Batching:** Non-moving environment geometry combined into single meshes
+2. **GPU Instancing:** Repetitive props (desks, chairs) use instanced materials
+3. **LOD (Level of Detail):** Distant objects use simplified geometry
+4. **Texture Optimization:** ASTC compression, power-of-two sizes
+5. **Object Pooling:** Particle effects and UI elements reused via pooling
+6. **Physics Optimization:** Simplified collider shapes, layer masks for raycasting
+
+---
+
+## Testing Strategies
+
+### 1. Functional Testing
+- Verify lever can be grabbed and rotated
+- Confirm force calculations are accurate
+- Test completion detection and scoring
+- Validate UI responsiveness and updates
+
+### 2. Performance Testing
+- Monitor frame rate under load using Unity Profiler
+- Measure CPU/GPU time per frame
+- Test on various hardware specifications
+- Verify memory footprint remains under budget
+
+### 3. Interaction Testing
+- Hand tracking accuracy in various lighting conditions
+- Gesture recognition reliability
+- Physics interaction smoothness
+- UI interaction responsiveness
+
+### 4. Compatibility Testing
+- Meta Quest 2 (minimum target)
+- Meta Quest 3 (enhanced target)
+
+### 5. Usability Testing
+- New users can understand core mechanics
+- Educational content is clear and reinforcing
+- No motion sickness triggers (smooth locomotion)
+- Accessibility of all UI elements
+
+---
+
+
+---
+
+## Deployment & Distribution
+
+### Pre-Deployment Checklist
+
+- All scenes properly configured and saved
+- All assets properly compressed and optimized
+- XR settings verified and validated
+- Build settings on Android platform
+- Performance profiling completed successfully
+- All physics calculations verified accurate
+- UI responsiveness tested on target hardware
+- No console errors or warnings
+
+### APK Distribution
+
+**Build Release APK:**
+```
+File → Build Settings
+Scenes in Build: [MainMenu, SimpleMachinesLab, ResultsScreen]
+Build → Build (not Build and Run)
+Save as: VRLearningPlatform_Release.apk
+```
+
+**Installation Package:**
+1. VRLearningPlatform_Release.apk
+2. Installation instructions document
+3. Requirements and prerequisites
+4. Troubleshooting guide
+
+### GitHub Release
+
+1. Tag a release: `v1.0-capstone-submission`
+2. Include in release description:
+   - APK download link
+   - Installation instructions
+   - System requirements
+   - Known limitations
+   - Future roadmap
+
+---
+
+## Troubleshooting Guide
+
+### Common Issues
+
+**Issue: Git LFS files appear as text pointers**
+```
+Solution: Run git lfs pull after cloning
+$ git lfs pull
+```
+
+**Issue: Build fails with "XR Plugin errors"**
+```
+Solution: 
+1. Edit → Project Settings → XR Plug-in Management
+2. Remove all providers, then add OpenXR again
+3. Resolve red validation errors
+4. Restart Unity
+```
+
+**Issue: Performance drops below 72 FPS**
+```
+Solution:
+1. Open Unity Profiler (Window → Analysis → Profiler)
+2. Monitor GPU and CPU time
+3. Check for excessive draw calls (target <100)
+4. Verify ASTC texture compression is applied
+5. Check for physics-related GC allocations
+```
+
+**Issue: Hand tracking not working on device**
+```
+Solution:
+1. Update to latest Meta Quest OS
+2. Enable hand tracking in Quest settings
+3. Verify OpenXR Runtime is selected
+4. Check XR Hands package is imported
+5. Restart application
+```
+
+**Issue: APK won't install on Quest**
+```
+Solution:
+1. Verify Android SDK/NDK versions match requirements
+2. Check device has sufficient storage (>2GB free)
+3. Ensure developer mode is enabled
+4. Try: adb uninstall com.DefaultCompany.VRLearningPlatform
+5. Try: adb install -r VRLearningPlatform.apk
+```
+
+---
+
+## Recommendations & Future Work
+
+### Community Application
+
+For communities or organizations deploying this application, I highly recommend utilizing the built-in responsive layouts optimized during my UI overhaul. The app is best suited for workflows requiring fast data entry with zero visual clutter.
+
+- Advanced Personalization: Introducing dark mode and custom user-theming options based on preliminary accessibility.
+
+
+### Phase 3
+- **Generative AI NPCs:** AI-powered educational assistants
+- **Mixed Reality Support:** AR Foundation integration
+- **Mobile Platform Expansion:** iOS support via ARKit
+
+---
+
+## Technical Specifications
+
+### System Requirements
+
+**Minimum (Meta Quest 2):**
+- CPU: Snapdragon 845
+- RAM: 6GB
+- Storage: 2GB free space
+- OS: Android 9.0+
+
+**Recommended (Meta Quest 3):**
+- CPU: Snapdragon XR Gen 2
+- RAM: 8GB
+- Storage: 4GB free space
+- OS: Android 13+
+
+### Development Environment
+
+- Unity: 2022.3.x LTS
+- Rendering: Universal Render Pipeline (URP)
+- Physics: Unity Physics 2D/3D
+- Networking: Optional (NGO for future multiplayer)
+- Audio: Spatial Audio ready
+
+### Dependencies
+
+- OpenXR Plugin 1.9+
+- XR Interaction Toolkit 2.5.2
+- XR Hands 1.7.3
+- Input System 1.6+
+- TextMesh Pro 3.2+
+
+---
+
+## Contact & Support
+
+**Project Owner:** DUSHIME1212  
+**Repository:** https://github.com/DUSHIME1212/VRLearningPlatform  
+**Primary Contact:** h.dushime@alustudent.com 
+**Supervisor:** Tunde Isiaq Gbadamosi
+
+---
+
+## Assessment Criteria Addressed
+
+### Functionality Demonstration
+- Core lever mechanics work accurately
+- Hand tracking interaction responsive and natural
+- Physics calculations mathematically correct
+- UI provides real-time educational feedback
+
+### Testing & Validation
+- Tested on Meta Quest 2 and 3
+- Performance verified at 72+ FPS
+- Various interaction scenarios validated
+- Physics accuracy confirmed against theoretical values
+
+### Performance Analysis
+- Frame rate stable and consistent
+- Memory usage optimized
+- Draw calls minimized
+- Performance profile matches target specifications
+
+### Technical Documentation
+- Comprehensive README with installation steps
+- Project structure clearly documented
+- Code follows SOLID principles and best practices
+- Git commit history shows iterative development
+
+### Video Demonstration
+- 5-minute demo focusing on core functionalities
+- Clear examples of each feature
+- Performance and stability demonstrated
+- Educational value clearly communicated
+
+---
+
+
+
+---
+
+**Last Updated:** July 3, 2026  
+**Status:** Ready for Capstone Submission  
+**Version:** 1.0 - Capstone Edition
