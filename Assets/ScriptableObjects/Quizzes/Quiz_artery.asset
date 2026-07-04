@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_artery
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_artery
+  ModuleId: blood_circulation
+  Title: Arteries
+  Questions:
+  - Question: Arteries carry blood ___ the heart.
+    Options:
+    - Away from
+    - Toward
+    - Around
+    - Into
+    CorrectIndex: 0
+    Explanation: Arteries carry blood away from the heart; veins return it.
+  - Question: Artery walls are thick and muscular mainly to withstand...
+    Options:
+    - High pressure
+    - Low temperature
+    - Gravity
+    - Light
+    CorrectIndex: 0
+    Explanation: Blood leaves the heart under high pressure, so artery walls are
+      strong.
+  - Question: The hollow space inside an artery where blood flows is the...
+    Options:
+    - Lumen
+    - Valve
+    - Node
+    - Septum
+    CorrectIndex: 0
+    Explanation: The lumen is the open channel blood flows through.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

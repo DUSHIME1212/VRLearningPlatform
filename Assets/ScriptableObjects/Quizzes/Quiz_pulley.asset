@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_pulley
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_pulley
+  ModuleId: simple_machines
+  Title: Pulleys
+  Questions:
+  - Question: A single fixed pulley changes the ___ of the force.
+    Options:
+    - Direction
+    - Amount
+    - Mass
+    - Colour
+    CorrectIndex: 0
+    Explanation: A fixed pulley redirects the force without reducing it.
+  - Question: Adding more pulleys reduces the ___ needed to lift a load.
+    Options:
+    - Effort force
+    - Rope length
+    - Load weight
+    - Time
+    CorrectIndex: 0
+    Explanation: More supporting rope sections share the load, cutting the effort.
+  - Question: Which flexible part transfers the force in a pulley?
+    Options:
+    - Rope
+    - Axle
+    - Hook
+    - Spoke
+    CorrectIndex: 0
+    Explanation: The rope runs over the wheel and carries the force.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

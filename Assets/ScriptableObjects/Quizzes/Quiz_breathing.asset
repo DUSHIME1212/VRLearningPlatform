@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_breathing
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_breathing
+  ModuleId: breathing
+  Title: Breathing In & Out
+  Questions:
+  - Question: Air travels to the lungs through the...
+    Options:
+    - Trachea
+    - Esophagus
+    - Aorta
+    - Spine
+    CorrectIndex: 0
+    Explanation: The trachea (windpipe) carries air toward the lungs.
+  - Question: The trachea branches into two tubes called the...
+    Options:
+    - Bronchi
+    - Alveoli
+    - Arteries
+    - Valves
+    CorrectIndex: 0
+    Explanation: The bronchi lead into the left and right lungs.
+  - Question: When you inhale, your chest cavity...
+    Options:
+    - Expands
+    - Shrinks
+    - Stays the same
+    - Collapses
+    CorrectIndex: 0
+    Explanation: The chest expands to draw air into the lungs.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

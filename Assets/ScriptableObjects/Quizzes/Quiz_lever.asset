@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_lever
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_lever
+  ModuleId: simple_machines
+  Title: Levers
+  Questions:
+  - Question: What is the fixed point a lever pivots around?
+    Options:
+    - Fulcrum
+    - Load
+    - Effort
+    - Beam
+    CorrectIndex: 0
+    Explanation: The fulcrum is the fixed pivot the lever turns on.
+  - Question: Moving the load closer to the fulcrum makes lifting it...
+    Options:
+    - Easier
+    - Harder
+    - Impossible
+    - No different
+    CorrectIndex: 0
+    Explanation: Less distance from the pivot means less effort is needed.
+  - Question: A see-saw is an example of which simple machine?
+    Options:
+    - A lever
+    - A screw
+    - A pulley
+    - A wheel
+    CorrectIndex: 0
+    Explanation: A see-saw is a first-class lever.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

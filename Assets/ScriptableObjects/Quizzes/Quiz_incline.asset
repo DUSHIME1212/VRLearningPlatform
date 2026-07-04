@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_incline
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_incline
+  ModuleId: simple_machines
+  Title: Inclined Planes
+  Questions:
+  - Question: An inclined plane lets you trade a smaller force for a ___ distance.
+    Options:
+    - Longer
+    - Shorter
+    - Equal
+    - Zero
+    CorrectIndex: 0
+    Explanation: You push with less force but over a longer path.
+  - Question: A gentler (less steep) ramp needs ___ force to push a load up.
+    Options:
+    - Less
+    - More
+    - The same
+    - Infinite
+    CorrectIndex: 0
+    Explanation: A smaller slope means a smaller pushing force.
+  - Question: Which change reduces the effort to slide a block up a ramp?
+    Options:
+    - Less friction
+    - More friction
+    - More weight
+    - A steeper slope
+    CorrectIndex: 0
+    Explanation: Lower friction means less resisting force.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

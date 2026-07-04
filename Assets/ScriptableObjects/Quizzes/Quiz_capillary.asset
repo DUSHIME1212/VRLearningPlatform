@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_capillary
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_capillary
+  ModuleId: blood_circulation
+  Title: Capillaries
+  Questions:
+  - Question: Capillary walls are only one cell thick to allow...
+    Options:
+    - Easy gas exchange
+    - Faster flow
+    - More pressure
+    - Storage
+    CorrectIndex: 0
+    Explanation: Thin walls let oxygen and carbon dioxide pass through easily.
+  - Question: Red blood cells pass through capillaries mostly in a...
+    Options:
+    - Single file
+    - Big clump
+    - Backward flow
+    - Circle
+    CorrectIndex: 0
+    Explanation: Capillaries are so narrow that cells squeeze through one at a time.
+  - Question: At the tissues, capillaries deliver oxygen and collect...
+    Options:
+    - Carbon dioxide
+    - More oxygen
+    - Water
+    - Light
+    CorrectIndex: 0
+    Explanation: Cells give off carbon dioxide, which the blood carries away.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6

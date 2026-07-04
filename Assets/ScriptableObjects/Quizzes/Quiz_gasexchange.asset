@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394371d89e7d3e74aa97ef03450fd932, type: 3}
+  m_Name: Quiz_gasexchange
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Data.QuizDefinition
+  QuizId: quiz_gasexchange
+  ModuleId: breathing
+  Title: Gas Exchange
+  Questions:
+  - Question: Gas exchange happens in tiny air sacs called...
+    Options:
+    - Alveoli
+    - Bronchi
+    - Ribs
+    - Valves
+    CorrectIndex: 0
+    Explanation: Alveoli are the tiny sacs where gases cross into the blood.
+  - Question: Oxygen moves from the alveoli into the...
+    Options:
+    - Blood
+    - Stomach
+    - Bones
+    - Nerves
+    CorrectIndex: 0
+    Explanation: Oxygen diffuses across the alveolar wall into the blood.
+  - Question: Which gas is removed from the blood at the alveoli?
+    Options:
+    - Carbon dioxide
+    - Oxygen
+    - Nitrogen
+    - Helium
+    CorrectIndex: 0
+    Explanation: Carbon dioxide leaves the blood to be breathed out.
+  CorrectClip: {fileID: 0}
+  WrongClip: {fileID: 0}
+  CompleteClip: {fileID: 0}
+  PassThreshold: 0.6
