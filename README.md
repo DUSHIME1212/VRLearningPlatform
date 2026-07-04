@@ -1,4 +1,4 @@
-# VRLearningPlatform (SIMBA) - Capstone Project Submission
+# VRLearningPlatform (SIMBA)
 
 ## Project Overview
 
