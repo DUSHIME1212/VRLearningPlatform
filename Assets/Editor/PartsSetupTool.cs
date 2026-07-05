@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using VRLearning.Parts;
 using VRLearning.Simulation.Physics;
+using VRLearning.Audio;
 
 namespace VRLearning.EditorTools
 {
@@ -295,6 +296,172 @@ namespace VRLearning.EditorTools
                     if (t.isRightToLeftText) { t.isRightToLeftText = false; EditorUtility.SetDirty(t); rtl++; }
             }
             return $"UI: raycasters={rc}, faced={faced}, RTL-off={rtl}";
+        }
+
+        // ---------------- Scene audio ----------------
+
+        private const string ClickClipPath = "Assets/VRTemplateAssets/Audio/Button_22_click.wav";
+
+        [MenuItem("VRLearning/Parts/Add Scene Audio (UISoundKit)")]
+        public static void SetupSceneAudioMenu()
+        {
+            EditorUtility.DisplayDialog("Scene Audio", SetupSceneAudio(), "OK");
+        }
+
+        /// <summary>Add/refresh a "SceneAudio" object with a UISoundKit and assign the sample click clip.</summary>
+        public static string SetupSceneAudio()
+        {
+            var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(ClickClipPath);
+
+            var go = GameObject.Find("SceneAudio");
+            if (go == null) { go = new GameObject("SceneAudio"); Undo.RegisterCreatedObjectUndo(go, "Create SceneAudio"); }
+            var kit = go.GetComponent<UISoundKit>();
+            if (kit == null) kit = Undo.AddComponent<UISoundKit>(go);
+
+            var so = new SerializedObject(kit);
+            foreach (var field in new[] { "clickClip", "correctClip", "wrongClip", "completeClip" })
+            {
+                var p = so.FindProperty(field);
+                if (p != null) p.objectReferenceValue = clip;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            return clip != null ? "UISoundKit added; click clip assigned (pitch handles correct/wrong/complete)."
+                                : "UISoundKit added, but click clip not found at " + ClickClipPath;
+        }
+
+        // ---------------- Heavy FBX import optimisation ----------------
+
+        [MenuItem("VRLearning/Parts/Optimize Heavy FBX Imports")]
+        public static void OptimizeHeavyFbxMenu()
+        {
+            EditorUtility.DisplayDialog("Optimize Heavy FBX Imports", OptimizeHeavyFbxImports(), "OK");
+        }
+
+        /// <summary>Read/Write off, Mesh Compression High, Generate Colliders off on large (&gt;5 MB) FBX models.</summary>
+        public static string OptimizeHeavyFbxImports()
+        {
+            int changed = 0;
+            var sb = new System.Text.StringBuilder();
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { "Assets/Models" }))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (!path.ToLowerInvariant().EndsWith(".fbx")) continue;
+                if (!(AssetImporter.GetAtPath(path) is ModelImporter importer)) continue;
+                if (new System.IO.FileInfo(path).Length < 5L * 1024 * 1024) continue; // only heavy FBX
+
+                bool dirty = false;
+                if (importer.isReadable) { importer.isReadable = false; dirty = true; }
+                if (importer.meshCompression != ModelImporterMeshCompression.High) { importer.meshCompression = ModelImporterMeshCompression.High; dirty = true; }
+                if (importer.addCollider) { importer.addCollider = false; dirty = true; }
+                if (dirty)
+                {
+                    importer.SaveAndReimport();
+                    changed++;
+                    sb.Append(System.IO.Path.GetFileName(path)).Append(' ');
+                }
+            }
+            return $"Optimized {changed} heavy FBX importer(s). {sb}";
+        }
+
+        private const int HeavyVertexThreshold = 20000;
+
+        /// <summary>
+        /// Deactivate every GameObject in the active scene holding a mesh with more than
+        /// <see cref="HeavyVertexThreshold"/> vertices (the big Meshy models), so the scene stays light.
+        /// Placeholder cubes and normal props are untouched. Re-run the parts setup after you add final models.
+        /// </summary>
+        [MenuItem("VRLearning/Parts/Deactivate Heavy Models In Active Scene")]
+        public static void DeactivateHeavyModels()
+        {
+            var sb = new System.Text.StringBuilder();
+            int count = 0;
+
+            foreach (var mf in Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            {
+                if (mf.sharedMesh == null || mf.sharedMesh.vertexCount < HeavyVertexThreshold) continue;
+                var go = mf.gameObject;
+                if (!go.activeSelf) continue;
+                Undo.RecordObject(go, "Deactivate heavy model");
+                go.SetActive(false);
+                EditorUtility.SetDirty(go);
+                count++;
+                sb.AppendLine($"{go.name}  ({mf.sharedMesh.vertexCount:N0} verts)");
+            }
+            foreach (var smr in Object.FindObjectsByType<SkinnedMeshRenderer>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            {
+                if (smr.sharedMesh == null || smr.sharedMesh.vertexCount < HeavyVertexThreshold) continue;
+                var go = smr.gameObject;
+                if (!go.activeSelf) continue;
+                Undo.RecordObject(go, "Deactivate heavy model");
+                go.SetActive(false);
+                EditorUtility.SetDirty(go);
+                count++;
+                sb.AppendLine($"{go.name}  ({smr.sharedMesh.vertexCount:N0} verts, skinned)");
+            }
+
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+
+            EditorUtility.DisplayDialog("Deactivate Heavy Models",
+                count == 0 ? $"No meshes over {HeavyVertexThreshold:N0} verts found in this scene." :
+                $"Deactivated {count} heavy object(s):\n\n{sb}", "OK");
+        }
+
+        /// <summary>Re-activate objects that <see cref="DeactivateHeavyModels"/> turned off (heavy meshes only).</summary>
+        [MenuItem("VRLearning/Parts/Reactivate Heavy Models In Active Scene")]
+        public static void ReactivateHeavyModels()
+        {
+            int count = 0;
+            foreach (var mf in Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (mf.sharedMesh == null || mf.sharedMesh.vertexCount < HeavyVertexThreshold) continue;
+                var go = mf.gameObject;
+                if (go.activeSelf) continue;
+                Undo.RecordObject(go, "Reactivate heavy model");
+                go.SetActive(true);
+                EditorUtility.SetDirty(go);
+                count++;
+            }
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            EditorUtility.DisplayDialog("Reactivate Heavy Models", $"Reactivated {count} object(s).", "OK");
+        }
+
+        /// <summary>Programmatic (no dialog): deactivate heavy meshes in the active scene, returns a report.</summary>
+        public static string DeactivateHeavyModelsSilent()
+        {
+            int count = 0;
+            var sb = new System.Text.StringBuilder();
+            foreach (var mf in Object.FindObjectsByType<MeshFilter>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            {
+                if (mf.sharedMesh == null || mf.sharedMesh.vertexCount < HeavyVertexThreshold) continue;
+                var go = mf.gameObject;
+                if (!go.activeSelf) continue;
+                go.SetActive(false);
+                EditorUtility.SetDirty(go);
+                count++;
+                sb.Append(go.name).Append('(').Append(mf.sharedMesh.vertexCount).Append(") ");
+            }
+            foreach (var smr in Object.FindObjectsByType<SkinnedMeshRenderer>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+            {
+                if (smr.sharedMesh == null || smr.sharedMesh.vertexCount < HeavyVertexThreshold) continue;
+                var go = smr.gameObject;
+                if (!go.activeSelf) continue;
+                go.SetActive(false);
+                EditorUtility.SetDirty(go);
+                count++;
+                sb.Append(go.name).Append("(skin) ");
+            }
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            return $"{count}: {sb}";
         }
 
         /// <summary>Best guess at the model group: the non-UI/non-player root object with the most renderer children.</summary>

@@ -31,6 +31,9 @@ namespace VRLearning.Parts
 
         private int _current = -1;
 
+        /// <summary>Raised whenever the displayed part changes. (For audio/FX.)</summary>
+        public event System.Action PartChanged;
+
         private void Awake()
         {
             if (parts == null) parts = new List<PartInfo>();
@@ -73,6 +76,8 @@ namespace VRLearning.Parts
             if (descriptionLabel != null) descriptionLabel.text = part.DisplayDescription;
             if (counterLabel != null)
                 counterLabel.text = _current >= 0 ? $"{_current + 1} / {parts.Count}" : string.Empty;
+
+            PartChanged?.Invoke();
         }
 
         /// <summary>Advance the guided tour (wraps around).</summary>

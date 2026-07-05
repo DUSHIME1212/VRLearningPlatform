@@ -51,6 +51,11 @@ namespace VRLearning.Modules.Quiz
         [Header("Events")]
         public QuizCompletedEvent OnQuizCompleted;
 
+        /// <summary>Raised each time a question is answered; argument is whether it was correct. (For audio/FX.)</summary>
+        public event System.Action<bool> Answered;
+        /// <summary>Raised when the whole quiz finishes. (For audio/FX.)</summary>
+        public event System.Action Completed;
+
         private readonly List<Button> _spawned = new List<Button>();
         private int _index;
         private int _score;
@@ -151,6 +156,7 @@ namespace VRLearning.Modules.Quiz
                 feedbackLabel.text = (correct ? "Correct!  " : "Not quite.  ") + q.Explanation;
 
             AudioManager.Instance?.PlaySFX(correct ? quiz.CorrectClip : quiz.WrongClip);
+            Answered?.Invoke(correct);
 
             if (nextButton != null) nextButton.gameObject.SetActive(true);
         }
@@ -180,6 +186,7 @@ namespace VRLearning.Modules.Quiz
                 ProgressTracker.Instance.RecordPuzzleResult(quiz.ModuleId, quiz.QuizId, passed, StarsFor(_score, total), 0f);
 
             OnQuizCompleted?.Invoke(_score, total);
+            Completed?.Invoke();
         }
 
         private int StarsFor(int score, int total)
