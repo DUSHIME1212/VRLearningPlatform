@@ -9,11 +9,25 @@ on:
       - main
   workflow_dispatch:
 
+# Needed so the workflow can create Releases and upload the APK to them.
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build Android APK
     runs-on: ubuntu-latest
     steps:
+      # 0. Free up disk space — the large LFS models can exhaust the runner otherwise
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: false   # keep Android SDK (Unity needs it)
+          large-packages: true
+          docker-images: false
+          swap-storage: true
+
       # 1. Checkout the repository with Git LFS
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -22,7 +36,7 @@ jobs:
 
       # 2. Cache the Unity Library folder to speed up future builds
       - name: Cache Library
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-Android-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -31,20 +45,40 @@ jobs:
             Library-
 
       # 3. Build the Unity Project for Android using GameCI
+      #    (Unity version is auto-detected from ProjectSettings/ProjectVersion.txt)
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          # Optional Android signing — leave the secrets unset to produce a debug-signed APK.
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          ANDROID_KEYALIAS_NAME: ${{ secrets.ANDROID_KEYALIAS_NAME }}
+          ANDROID_KEYALIAS_PASS: ${{ secrets.ANDROID_KEYALIAS_PASS }}
         with:
           targetPlatform: Android
+          androidExportType: androidPackage   # build an installable .apk (not an .aab)
           buildName: VRLearningPlatform
           allowDirtyBuild: true
 
-      # 4. Upload the generated APK as a GitHub Artifact
+      # 4. Upload the generated APK as a GitHub Artifact (available on every run, incl. PRs)
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: VRLearningPlatform-Android-APK
-          path: build/Android/
+          path: build/Android/*.apk
+          if-no-files-found: error
+
+      # 5. On push to main, publish a Release with the APK attached
+      - name: Publish Release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: VRLearningPlatform build ${{ github.run_number }}
+          body: |
+            Automated Android build from commit ${{ github.sha }}.
+          files: build/Android/*.apk
+          generate_release_notes: true
