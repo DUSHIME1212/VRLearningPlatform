@@ -25,12 +25,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Exponent1: 1.6
+    - _Exponent1: 2.49
     - _Exponent2: 1.6
-    - _Intensity: 1
+    - _Intensity: 1.2
     m_Colors:
-    - _Color1: {r: 0.09, g: 0.11, b: 0.16, a: 1}
-    - _Color2: {r: 0.22, g: 0.28, b: 0.34, a: 1}
-    - _Color3: {r: 0.04, g: 0.05, b: 0.07, a: 1}
+    - _Color1: {r: 0.83552146, g: 0.8539563, b: 0.90188676, a: 1}
+    - _Color2: {r: 0.050943315, g: 0.7014659, b: 1, a: 1}
+    - _Color3: {r: 0.58825916, g: 0.73417133, b: 0.97735846, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
