@@ -16,6 +16,9 @@ GameObject:
   - component: {fileID: 816481451829471463}
   - component: {fileID: 8217144341289744801}
   - component: {fileID: 6060138281872121692}
+  - component: {fileID: 8189932151376154018}
+  - component: {fileID: 3051043701958695473}
+  - component: {fileID: 9167120334712377799}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -133,6 +136,46 @@ MonoBehaviour:
   maxMinutes: 30
   warnMinutes: 20
   homeScene: Starting Scene
+--- !u!114 &8189932151376154018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933646481549655135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb1647dc82ff6c438733675a89f2420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Core.PerformanceMonitor
+  sampleSeconds: 5
+  spikeMultiplier: 2
+  forceEnable: 0
+--- !u!114 &3051043701958695473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933646481549655135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d1b59c803627a4d8ba1f6df200268b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Core.LowMemoryHandler
+--- !u!114 &9167120334712377799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933646481549655135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc22af79e7f5bc4458ba2160d13061d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Core.HubReturn
+  hubScene: BasicScene
 --- !u!1 &7617755646400186904
 GameObject:
   m_ObjectHideFlags: 0

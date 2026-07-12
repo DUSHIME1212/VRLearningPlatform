@@ -95,7 +95,7 @@ namespace VRLearning.Core
                 string json = JsonUtility.ToJson(blob);
                 File.WriteAllText(FilePath, EncryptionService.Encrypt(json));
             }
-            catch (Exception e) { Debug.LogError("[DataRepository] Persist failed: " + e.Message); }
+            catch (Exception e) { VRLog.Exception("DataRepository/Persist", e); }
         }
 
         private void Load()
@@ -116,7 +116,7 @@ namespace VRLearning.Core
 
                 Debug.Log($"[DataRepository] Loaded {_learners.Count} learners, {_sessions.Count} sessions, {_scores.Count} scores.");
             }
-            catch (Exception e) { Debug.LogError("[DataRepository] Load failed: " + e.Message); }
+            catch (Exception e) { VRLog.Exception("DataRepository/Load", e); }
         }
 
         // ---- serialisable DTOs (DateTime -> ticks, enums -> int) so JsonUtility round-trips cleanly ----

@@ -13,7 +13,7 @@ namespace VRLearning.Core
     {
         [SerializeField] private float maxMinutes = 30f;   // hard cap (FR-11)
         [SerializeField] private float warnMinutes = 20f;  // warning (FR-11)
-        [SerializeField] private string homeScene = "Starting Scene";
+        [SerializeField] private string homeScene = "BasicScene";
 
         private float _timer;
         private bool _active;

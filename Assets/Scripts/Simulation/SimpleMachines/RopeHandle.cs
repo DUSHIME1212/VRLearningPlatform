@@ -66,7 +66,7 @@ namespace VRLearning.Simulation.SimpleMachines
             _prevPos = transform.position;
 
             if (_wheelRb != null)
-                _wheelRb.AddTorque(new Vector3(-deltaY * torqueSensitivity, 0f, 0f), ForceMode.Force);
+                _wheelRb.AddTorque(new Vector3(0f, 0f, deltaY * torqueSensitivity), ForceMode.Force);
         }
     }
 }

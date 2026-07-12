@@ -17,6 +17,7 @@
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.ARStarterAssets.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.WorldSpaceUI.csproj" />
+  <Project Path="MeshyAssembly.csproj" />
   <Project Path="Unity.XR.Hands.Samples.Gestures.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.Hands.Editor.csproj" />
 </Solution>
