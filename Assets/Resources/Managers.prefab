@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 8189932151376154018}
   - component: {fileID: 3051043701958695473}
   - component: {fileID: 9167120334712377799}
+  - component: {fileID: 1900434665837697334}
+  - component: {fileID: 5704533244105532285}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -176,6 +178,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Core.HubReturn
   hubScene: BasicScene
+--- !u!114 &1900434665837697334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933646481549655135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8f6779fd5abf4468c119bf122af5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.UI.SettingsPanel
+  openDistance: 1.5
+  panelSize: {x: 900, y: 640}
+--- !u!114 &5704533244105532285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933646481549655135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 313d79d394d9d0540ad9f77e9b956327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Parts.GrabbablePartsSetup
 --- !u!1 &7617755646400186904
 GameObject:
   m_ObjectHideFlags: 0
