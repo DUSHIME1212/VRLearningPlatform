@@ -154,23 +154,28 @@ namespace VRLearning.Simulation.SimpleMachines
             if (_rb == null || _hinge == null) return;
 
             float net = _torqueRight - _torqueLeft;   // >0 => Load (right) side heavier
-            float commandTorque;
+            float targetAngle = 0f;
 
-            if (Mathf.Abs(net) < balanceThreshold)
+            if (Mathf.Abs(net) >= balanceThreshold)
             {
-                // Balanced (or empty): ease back to level and bleed off spin.
-                // HingeJoint.angle can read NaN before the solver initialises it — sanitise it.
-                float angle = _hinge.angle;
-                if (!float.IsFinite(angle)) angle = 0f;
-                commandTorque = -angle * balanceStiffness;
+                // Calculate target tilt based on imbalance, clamped to max angle
+                targetAngle = net * anglePerTorque;
+                
+                // Original comment mentioned negative torque direction; however, TippedSide
+                // expects a positive angle when the Right side drops. The right-hand rule
+                // for HingeJoints ensures that a positive torque increases the angle.
+                targetAngle = Mathf.Clamp(targetAngle, -maxTiltAngle, maxTiltAngle);
             }
-            else
-            {
-                // Negative sign: with this hinge's axis orientation, the heavier-moment side must
-                // drop, which is the negative torque direction. (Flip via invertTilt if a future
-                // scene reverses the hinge axis.)
-                commandTorque = -net * torqueGain;
-            }
+
+            // HingeJoint.angle can read NaN before the solver initialises it — sanitise it.
+            float currentAngle = _hinge.angle;
+            if (!float.IsFinite(currentAngle)) currentAngle = 0f;
+
+            float angleError = currentAngle - targetAngle;
+            float angularVelocity = Vector3.Dot(_rb.angularVelocity, _hinge.axis.normalized);
+
+            // Spring-damper system to pull the lever toward target tilt
+            float commandTorque = -(angleError * tiltStiffness) - (angularVelocity * tiltDamping);
 
             if (invertTilt) commandTorque = -commandTorque;
 
