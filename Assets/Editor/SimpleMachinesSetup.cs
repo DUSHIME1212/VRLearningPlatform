@@ -299,19 +299,41 @@ namespace VRLearning.Editor
             }
 
             // ── Real physics rope (Wire.cs) replacing the cosmetic LineRenderer ──────────────
-            // Start = the RopeHandle itself, so the rope visibly starts at the point the player
-            // grabs and follows it as they pull it up/down its track; End = an anchor that rides
-            // on the load (a child empty with no Rigidbody, so the wire follows the load without
-            // physically fighting PulleyController's height drive). Generous slack keeps it stable.
+            // RopeHandle and PulleyWeight both sit on the same side of the Wheel (x=0.3 vs the
+            // wheel's x=0), so a single straight Start->End rope never actually passes near the
+            // wheel's rim. Wire.cs has no waypoint support, so we route the rope through a fixed
+            // rim anchor using TWO chained Wire instances: load -> rim -> handle. This reads as
+            // one continuous rope that visibly bends/drapes near the wheel's edge instead of
+            // floating past it.
+            const float WheelVisualRadius = 0.25f; // matches the wheel mesh and PulleyController.wheelRadius
+            const float RopeSlack = 1.35f;          // extra length so each segment sags/drapes, not taut
+            // The wheel's CapsuleCollider is scaled thinner than it is wide, so PhysX treats it as a
+            // near-sphere of radius ~WheelVisualRadius. Placing the rim anchor exactly on that
+            // surface lets the rope segments' own colliders (radius ~0.02) clip into the wheel and
+            // spin it with no player input. Clear the collider by that segment radius plus a margin.
+            const float RimClearance = WheelVisualRadius + 0.08f;
+
             var strayAnchor = GameObject.Find("WireStartAnchor");
             if (strayAnchor != null) Object.DestroyImmediate(strayAnchor); // leftover from an earlier revision
+            var strayRope = GameObject.Find("WireRope");
+            if (strayRope != null) Object.DestroyImmediate(strayRope); // leftover single-segment revision
 
             var wireEnd = GetOrCreateChild(pwGo, "WireEndAnchor");
             wireEnd.transform.localPosition = new Vector3(0f, 0.15f, 0f);
 
-            float ropeGap = Mathf.Max(0.6f, rhGo.transform.position.y - wireEnd.transform.position.y);
-            var wireRope = InstantiateWireRope("WireRope", rhGo.transform, wireEnd.transform, ropeGap * 1.15f);
-            // Hide the old cosmetic rope — the Wire draws the rope now.
+            // Fixed point just outside the wheel's rim facing the load/handle — NOT parented to the
+            // wheel, so it stays put in world space and doesn't spin with it. GetOrCreateWorld only
+            // sets position on first creation, so re-assign explicitly in case this object already
+            // existed from an earlier setup revision (different clearance formula).
+            var rimAnchor = GetOrCreateWorld("WireRimAnchor",
+                wheel.transform.position + Vector3.right * RimClearance);
+            rimAnchor.transform.position = wheel.transform.position + Vector3.right * RimClearance;
+
+            float loadSideGap   = Vector3.Distance(wireEnd.transform.position, rimAnchor.transform.position);
+            float handleSideGap = Vector3.Distance(rimAnchor.transform.position, rhGo.transform.position);
+            InstantiateWireRope("WireRope_LoadSide", wireEnd.transform, rimAnchor.transform, loadSideGap * RopeSlack);
+            InstantiateWireRope("WireRope_HandleSide", rimAnchor.transform, rhGo.transform, handleSideGap * RopeSlack);
+            // Hide the old cosmetic rope — the Wire chain draws the rope now.
             lr.enabled = false;
 
             // Pulley formula whiteboard (live lift height).
