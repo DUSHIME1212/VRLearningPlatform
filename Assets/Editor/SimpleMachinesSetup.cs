@@ -60,11 +60,12 @@ namespace VRLearning.Editor
             rb.linearDamping   = 2f;
             rb.angularDamping  = 3f;
             rb.useGravity      = true;
-            rb.constraints     = RigidbodyConstraints.FreezePositionX
-                               | RigidbodyConstraints.FreezePositionY
-                               | RigidbodyConstraints.FreezePositionZ
-                               | RigidbodyConstraints.FreezeRotationX
-                               | RigidbodyConstraints.FreezeRotationY;
+            // No RigidbodyConstraints here: the HingeJoint below (fixed world anchor, no
+            // connectedBody) already fully constrains position and 2 of the 3 rotation axes by
+            // itself. Adding redundant RigidbodyConstraints on top of that over-constrains PhysX's
+            // solver and was found to fully lock even the joint's supposedly-free rotation axis —
+            // the plank would never move no matter how much torque was applied.
+            rb.constraints     = RigidbodyConstraints.None;
 
             // HingeJoint — pivot at plank's world position
             var hinge = GetOrAdd<HingeJoint>(plank);
@@ -79,21 +80,39 @@ namespace VRLearning.Editor
             var leverPuzz = GetOrAdd<LeverPuzzleController>(plank);
 
             // Snap notches along both arms — the child changes the moment arm (distance) by
-            // choosing a notch, and the balance + formula update live. Clean up the old
-            // single-zone-per-side layout from earlier runs first.
-            DestroyChildIfExists(plank, "SnapZone_Left");
-            DestroyChildIfExists(plank, "SnapZone_Right");
+            // choosing a notch, and the balance + formula update live. Clean up ANY previous
+            // notch/zone layout first (names and arm values have changed across setup revisions).
+            DestroyChildrenByPrefix(plank, "SnapZone_");
+
+            // The plank is a thin board (localScale.y is small, e.g. 0.07), and a snap zone's
+            // localPosition.y is expressed in the PLANK's local space — Unity multiplies it by
+            // the plank's scale to get the world offset. A flat "0.05" local offset therefore
+            // barely lifts anything (0.05 * 0.07 ≈ 0.0035 world units), which is why blocks used
+            // to sit embedded in the beam instead of resting on top of it. Compute the local
+            // offset that actually places a WeightBlock's bottom face on the plank's top surface.
+            const float PlankLocalHalfExtent    = 0.5f;  // unit-cube mesh half-size before scale
+            const float BlockWorldHalfHeight    = 0.1f;  // matches CreateWeightBlock's 0.2 cube / 2
+            const float BlockWorldHalfWidth     = 0.1f;  // matches CreateWeightBlock's 0.2 cube / 2
+            float plankScaleY = Mathf.Max(0.0001f, plank.transform.localScale.y);
+            float plankScaleX = Mathf.Max(0.0001f, plank.transform.localScale.x);
+            float notchLocalY = PlankLocalHalfExtent + (BlockWorldHalfHeight / plankScaleY);
+
+            // The beam's visible mesh only spans local X in [-0.5, 0.5] (a unit cube scaled by
+            // plankScaleX) — a snap notch placed past that, in the SAME local-space convention a
+            // child's localPosition uses, floats off the end of the beam instead of resting on
+            // it. Keep every notch (plus half the block's own width) within that visible extent.
+            float maxSafeArmLocalX = PlankLocalHalfExtent - (BlockWorldHalfWidth / plankScaleX);
 
             var leverZones = new List<WeightSnapZone>();
-            float[] notchArms = { 0.3f, 0.6f, 0.9f };
+            float[] notchArms = { maxSafeArmLocalX * 0.33f, maxSafeArmLocalX * 0.67f, maxSafeArmLocalX };
             foreach (float arm in notchArms)
             {
                 foreach (int sign in new[] { -1, 1 })
                 {
                     float x = arm * sign;
-                    string zoneName = $"SnapZone_{(sign < 0 ? "L" : "R")}{Mathf.RoundToInt(arm * 10)}";
+                    string zoneName = $"SnapZone_{(sign < 0 ? "L" : "R")}{Mathf.RoundToInt(arm * 100)}";
                     var zGo = GetOrCreateChild(plank, zoneName);
-                    zGo.transform.localPosition = new Vector3(x, 0.05f, 0f);
+                    zGo.transform.localPosition = new Vector3(x, notchLocalY, 0f);
                     zGo.transform.localRotation = Quaternion.identity;
                     var sz = GetOrAdd<WeightSnapZone>(zGo);
                     var sc = GetOrAdd<SphereCollider>(zGo);
@@ -186,11 +205,11 @@ namespace VRLearning.Editor
             wheelRb.linearDamping  = 0.5f;
             wheelRb.angularDamping = 2f;
             wheelRb.useGravity     = false;
-            wheelRb.constraints    = RigidbodyConstraints.FreezePositionX
-                                   | RigidbodyConstraints.FreezePositionY
-                                   | RigidbodyConstraints.FreezePositionZ
-                                   | RigidbodyConstraints.FreezeRotationY
-                                   | RigidbodyConstraints.FreezeRotationZ;
+            // No RigidbodyConstraints: the HingeJoint below (fixed world anchor, no connectedBody)
+            // already fully constrains position and 2 of 3 rotation axes. Stacking redundant
+            // RigidbodyConstraints on top of that was found (on the lever) to over-constrain
+            // PhysX's solver and fully lock even the joint's supposedly-free rotation axis.
+            wheelRb.constraints    = RigidbodyConstraints.None;
 
             // HingeJoint on wheel — rotates around X axis
             var hinge = GetOrAdd<HingeJoint>(wheel);
@@ -280,16 +299,18 @@ namespace VRLearning.Editor
             }
 
             // ── Real physics rope (Wire.cs) replacing the cosmetic LineRenderer ──────────────
-            // Start = fixed anchor at the top of the wheel; End = an anchor that rides on the load
-            // (a child empty with no Rigidbody, so the wire follows the load without physically
-            // fighting PulleyController's height drive). Generous slack keeps it stable.
-            var wireStart = GetOrCreateWorld("WireStartAnchor",
-                wheel.transform.position + Vector3.up * (0.25f + 0.05f));
+            // Start = the RopeHandle itself, so the rope visibly starts at the point the player
+            // grabs and follows it as they pull it up/down its track; End = an anchor that rides
+            // on the load (a child empty with no Rigidbody, so the wire follows the load without
+            // physically fighting PulleyController's height drive). Generous slack keeps it stable.
+            var strayAnchor = GameObject.Find("WireStartAnchor");
+            if (strayAnchor != null) Object.DestroyImmediate(strayAnchor); // leftover from an earlier revision
+
             var wireEnd = GetOrCreateChild(pwGo, "WireEndAnchor");
             wireEnd.transform.localPosition = new Vector3(0f, 0.15f, 0f);
 
-            float ropeGap = Mathf.Max(0.6f, wireStart.transform.position.y - wireEnd.transform.position.y);
-            var wireRope = InstantiateWireRope("WireRope", wireStart.transform, wireEnd.transform, ropeGap * 1.15f);
+            float ropeGap = Mathf.Max(0.6f, rhGo.transform.position.y - wireEnd.transform.position.y);
+            var wireRope = InstantiateWireRope("WireRope", rhGo.transform, wireEnd.transform, ropeGap * 1.15f);
             // Hide the old cosmetic rope — the Wire draws the rope now.
             lr.enabled = false;
 
@@ -807,6 +828,15 @@ namespace VRLearning.Editor
         {
             var t = parent.transform.Find(childName);
             if (t != null) Object.DestroyImmediate(t.gameObject);
+        }
+
+        static void DestroyChildrenByPrefix(GameObject parent, string namePrefix)
+        {
+            for (int i = parent.transform.childCount - 1; i >= 0; i--)
+            {
+                var child = parent.transform.GetChild(i);
+                if (child.name.StartsWith(namePrefix)) Object.DestroyImmediate(child.gameObject);
+            }
         }
 
         static T GetOrAdd<T>(GameObject go) where T : Component

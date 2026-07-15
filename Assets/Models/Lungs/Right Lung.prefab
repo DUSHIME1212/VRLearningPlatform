@@ -130,6 +130,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Right breathing organ where oxygen enters the blood.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: f57f5f0bc44f63c49882bd32b251a77b, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

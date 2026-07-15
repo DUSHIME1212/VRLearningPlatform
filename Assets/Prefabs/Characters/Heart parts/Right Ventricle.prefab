@@ -130,6 +130,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Lower chamber that pumps blood to the lungs.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 2c9e0264dcccf1a4cb95e55fe9e19e03, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

@@ -130,6 +130,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Large vein returning oxygen-poor blood to the heart.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 0ccd87eef396e8648805c1bef68a307b, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

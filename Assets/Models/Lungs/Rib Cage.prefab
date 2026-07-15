@@ -130,6 +130,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Bony cage protecting the lungs and heart; moves to help you breathe.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 9ed34e5ff35605c4881a7f408247ee2e, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

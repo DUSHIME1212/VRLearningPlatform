@@ -131,6 +131,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Cell that carries oxygen through the blood.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 070cb462743bfa14baed1898ea09faf9, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

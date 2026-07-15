@@ -130,6 +130,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Lower chamber that pumps oxygen-rich blood to the whole body.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: d4f9b3239060d4248842dd8b2c61686d, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

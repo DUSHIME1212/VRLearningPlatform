@@ -130,6 +130,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: The largest artery; carries blood from the heart to the body.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 34589473c4de6674f886c571457b87a4, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

@@ -5,9 +5,11 @@ namespace VRLearning.Simulation.SimpleMachines
     /// <summary>
     /// Drives the lever with LIVE torque physics (no canned animation). Every physics step it
     /// sums the torque each side exerts — torque = weightValue * momentArm for each occupied
-    /// snap notch — and applies the net torque to the plank Rigidbody about the hinge axis.
-    /// When the two sides balance (|net| &lt; threshold) it eases the plank back to level; when
-    /// they don't, the heavier-moment side accelerates down and rests on the HingeJoint limit.
+    /// snap notch — turns that into a live target tilt angle, and drives the plank Rigidbody
+    /// toward it with a critically-damped torque spring computed from the plank's own moment of
+    /// inertia (so it settles cleanly without overshoot regardless of tuning). When the two sides
+    /// balance (|net| &lt; threshold) the target is 0° (level); otherwise the heavier-moment side
+    /// settles down toward the HingeJoint's limit ("the ground").
     /// Exposes the per-side torque / weight / distance so a formula whiteboard can read it.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
@@ -23,15 +25,15 @@ namespace VRLearning.Simulation.SimpleMachines
         [Header("Torque tuning")]
         [Tooltip("Degrees of target tilt per unit of (weight*distance) imbalance.")]
         [SerializeField] private float anglePerTorque = 28f;
-        [Tooltip("Max tilt (deg); a big imbalance rests here — 'the ground'. Keep below the hinge limit.")]
-        [SerializeField] private float maxTiltAngle = 40f;
-        [Tooltip("Spring strength pulling the beam toward its target tilt.")]
-        [SerializeField] private float tiltStiffness = 12f;
-        [Tooltip("Damping so the beam settles smoothly instead of oscillating.")]
-        [SerializeField] private float tiltDamping = 4f;
+        [Tooltip("Max tilt (deg); a big imbalance rests here — 'the ground'. Keep at/near the hinge limit.")]
+        [SerializeField] private float maxTiltAngle = 44f;
+        [Tooltip("Rotational spring stiffness (N·m per radian of error) pulling the beam toward its live target tilt.")]
+        [SerializeField] private float springStiffness = 40f;
+        [Tooltip("Damping ratio: 1 = critically damped (fastest settle, no overshoot), >1 = slower/safer.")]
+        [SerializeField] private float dampingRatio = 1.2f;
         [Tooltip("Below this |net torque| the two sides count as balanced (level).")]
         [SerializeField] private float balanceThreshold = 0.05f;
-        [Tooltip("Flip if the heavier-moment side rises instead of dropping.")]
+        [Tooltip("Flip if the heavier-moment side rises instead of dropping (depends on hinge axis orientation).")]
         [SerializeField] private bool invertTilt = false;
 
         [Header("Visuals / feedback")]
@@ -46,6 +48,7 @@ namespace VRLearning.Simulation.SimpleMachines
         private Rigidbody _rb;
         private float _lastCreakTime;
         private const float CreakCooldown = 0.8f;
+        private const float MaxAppliedTorque = 300f; // safety clamp against numerical blowups
 
         private static readonly Color ColorBalanced = new Color(0.2f, 0.8f, 0.3f);
         private static readonly Color ColorTilting   = new Color(0.9f, 0.8f, 0.1f);
@@ -62,6 +65,7 @@ namespace VRLearning.Simulation.SimpleMachines
         {
             _hinge = GetComponent<HingeJoint>();
             _rb    = GetComponent<Rigidbody>();
+            _hinge.useSpring = false; // driven manually below via AddTorque, not PhysX's joint spring
         }
 
         private void FixedUpdate()
@@ -151,37 +155,45 @@ namespace VRLearning.Simulation.SimpleMachines
 
         private void ApplyLeverPhysics()
         {
-            if (_rb == null || _hinge == null) return;
+            if (_hinge == null || _rb == null) return;
 
             float net = _torqueRight - _torqueLeft;   // >0 => Load (right) side heavier
-            float targetAngle = 0f;
+            float targetAngleDeg = 0f;
 
             if (Mathf.Abs(net) >= balanceThreshold)
             {
-                // Calculate target tilt based on imbalance, clamped to max angle
-                targetAngle = net * anglePerTorque;
-                
-                // Original comment mentioned negative torque direction; however, TippedSide
-                // expects a positive angle when the Right side drops. The right-hand rule
-                // for HingeJoints ensures that a positive torque increases the angle.
-                targetAngle = Mathf.Clamp(targetAngle, -maxTiltAngle, maxTiltAngle);
+                // Empirically, this hinge's axis convention makes a POSITIVE angle raise the
+                // right (Load) side — so the heavier side must target a NEGATIVE angle to drop.
+                targetAngleDeg = -net * anglePerTorque;
+                targetAngleDeg = Mathf.Clamp(targetAngleDeg, -maxTiltAngle, maxTiltAngle);
             }
+            if (invertTilt) targetAngleDeg = -targetAngleDeg;
+            if (!float.IsFinite(targetAngleDeg)) targetAngleDeg = 0f;
 
-            // HingeJoint.angle can read NaN before the solver initialises it — sanitise it.
-            float currentAngle = _hinge.angle;
-            if (!float.IsFinite(currentAngle)) currentAngle = 0f;
+            float currentAngleDeg = _hinge.angle;
+            if (!float.IsFinite(currentAngleDeg)) currentAngleDeg = 0f;
 
-            float angleError = currentAngle - targetAngle;
-            float angularVelocity = Vector3.Dot(_rb.angularVelocity, _hinge.axis.normalized);
+            // PhysX can decide the plank is "at rest" and sleep it mid-swing (damping keeps
+            // angular velocity dipping below the sleep threshold even while short of target).
+            // Wake it BEFORE applying torque this step — AddTorque on an already-sleeping body
+            // is silently ignored until the body is woken, so waking after would waste a step.
+            bool atRest = Mathf.Abs(currentAngleDeg - targetAngleDeg) <= 1f;
+            if (!atRest && _rb.IsSleeping())
+                _rb.WakeUp();
 
-            // Spring-damper system to pull the lever toward target tilt
-            float commandTorque = -(angleError * tiltStiffness) - (angularVelocity * tiltDamping);
+            // Critically-damped rotational spring, in proper radian units, driven off the plank's
+            // own moment of inertia about the hinge axis — this is what keeps it stable at any
+            // stiffness (unlike a naive AddTorque loop mixing degrees with an arbitrary gain).
+            float errorRad       = (currentAngleDeg - targetAngleDeg) * Mathf.Deg2Rad;
+            float angularVelRad  = Vector3.Dot(_rb.angularVelocity, _hinge.axis.normalized);
+            float momentOfInertia = Mathf.Max(0.001f, _rb.inertiaTensor.z);
+            float damping         = 2f * dampingRatio * Mathf.Sqrt(springStiffness * momentOfInertia);
 
-            if (invertTilt) commandTorque = -commandTorque;
+            float torque = -(springStiffness * errorRad) - (damping * angularVelRad);
+            torque = Mathf.Clamp(torque, -MaxAppliedTorque, MaxAppliedTorque);
 
-            // Never feed NaN/Inf to the physics engine (it would corrupt the Rigidbody).
-            if (!float.IsFinite(commandTorque)) return;
-            _rb.AddTorque(_hinge.axis.normalized * commandTorque, ForceMode.Force);
+            if (float.IsFinite(torque))
+                _rb.AddTorque(_hinge.axis.normalized * torque, ForceMode.Force);
         }
 
         // ── Visuals ──────────────────────────────────────────────────────────────────────

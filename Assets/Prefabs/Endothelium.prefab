@@ -131,6 +131,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Smooth inner lining that blood flows against.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 8e95db4abfd043649a83c4ebe1f0c3c9, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

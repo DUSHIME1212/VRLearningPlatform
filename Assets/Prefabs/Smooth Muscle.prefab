@@ -131,6 +131,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: Muscle layer that lets the artery widen and narrow.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: 4c924220d8935fd48985a0993dde4746, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6

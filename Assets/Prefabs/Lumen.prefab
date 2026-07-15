@@ -131,6 +131,8 @@ MonoBehaviour:
   NameRW: 
   DescriptionEN: The hollow space inside the vessel where blood flows.
   DescriptionRW: 
+  NarrationEN: 
+  NarrationClip: {fileID: 8300000, guid: e4447565d738df44186559e361ac99e1, type: 3}
   highlightRenderers: []
   highlightColor: {r: 1, g: 0.85, b: 0.2, a: 1}
   highlightEmission: 0.6
