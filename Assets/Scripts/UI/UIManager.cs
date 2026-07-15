@@ -32,12 +32,17 @@ namespace VRLearning
             StartCoroutine(HideAfter(sessionWarningPanel, 5f));
         }
 
-        public void ShowHint(string hintText)
+        private Coroutine _hintHide;
+
+        public void ShowHint(string hintText, float autoHideSeconds = 9f)
         {
             if (hintPanel == null) return;
             hintPanel.SetActive(true);
             var label = hintPanel.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             if (label) label.text = hintText;
+
+            if (_hintHide != null) StopCoroutine(_hintHide);
+            if (autoHideSeconds > 0f) _hintHide = StartCoroutine(HideAfter(hintPanel, autoHideSeconds));
         }
 
         public void ShowSuccess(int stars)

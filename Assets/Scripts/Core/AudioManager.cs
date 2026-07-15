@@ -52,7 +52,7 @@ namespace VRLearning.Core
 
         public void PlayVO(AudioClip clip)
         {
-            if (clip == null) return;
+            if (clip == null || voSource == null) return;
             voSource.Stop();
             voSource.clip   = clip;
             voSource.volume = sfxVolume * masterVolume;
@@ -61,13 +61,13 @@ namespace VRLearning.Core
 
         public void PlayMusic(AudioClip clip, bool loop = true)
         {
-            if (musicSource.clip == clip) return;
+            if (musicSource == null || musicSource.clip == clip) return;
             musicSource.clip   = clip;
             musicSource.loop   = loop;
             musicSource.volume = musicVolume * masterVolume;
             musicSource.Play();
         }
 
-        public void StopMusic() => musicSource.Stop();
+        public void StopMusic() { if (musicSource != null) musicSource.Stop(); }
     }
 }

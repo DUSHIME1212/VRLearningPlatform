@@ -10,6 +10,9 @@ namespace VRLearning.Simulation.SimpleMachines
     public class WeightBlock : MonoBehaviour
     {
         [SerializeField] public float weightValue = 1f;
+        [Tooltip("Colour used by the formula whiteboard to match this block's Load/Effort term. " +
+                 "Set to the block's cube colour by the setup tool.")]
+        [SerializeField] public Color DisplayColor = Color.white;
         [SerializeField] private AudioClip impactClip;
         [SerializeField] private float snapRadius = 0.25f;
 

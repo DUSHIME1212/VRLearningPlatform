@@ -24,8 +24,8 @@ namespace VRLearning.Core
         {
             var score = new PerformanceScore
             {
-                LearnerId    = SessionManager.Instance.CurrentProfile?.LearnerId,
-                SessionId    = SessionManager.Instance.ActiveSession?.SessionId,
+                LearnerId    = SessionManager.Instance?.CurrentProfile?.LearnerId,
+                SessionId    = SessionManager.Instance?.ActiveSession?.SessionId,
                 ModuleId     = moduleId,
                 PuzzleId     = puzzleId,
                 Passed       = passed,
@@ -34,7 +34,7 @@ namespace VRLearning.Core
                 RecordedAt   = System.DateTime.UtcNow
             };
 
-            DataRepository.Instance.SaveScore(score);
+            DataRepository.Instance?.SaveScore(score);
             _pendingScores.Add(score);
         }
 

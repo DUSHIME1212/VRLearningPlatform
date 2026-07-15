@@ -19,10 +19,14 @@ namespace VRLearning.Core
         [SerializeField] private ProgressTracker progressTracker;
 
         [Header("Config")]
-        [SerializeField] private float vrSessionMaxMinutes = 25f;
+        [Tooltip("Hard cap — the session auto-ends at this many minutes (FR-11).")]
+        [SerializeField] private float vrSessionMaxMinutes = 30f;
+        [Tooltip("Show an on-screen warning at this many minutes (FR-11).")]
+        [SerializeField] private float vrSessionWarnMinutes = 20f;
 
         private float _sessionTimer;
         private bool _sessionActive;
+        private bool _warned;
 
         public AppState CurrentState { get; private set; } = AppState.Boot;
 
@@ -42,8 +46,20 @@ namespace VRLearning.Core
         {
             if (!_sessionActive) return;
             _sessionTimer += Time.deltaTime;
-            if (_sessionTimer >= vrSessionMaxMinutes * 60f)
+
+            // Warning at the warn threshold (once).
+            if (!_warned && _sessionTimer >= vrSessionWarnMinutes * 60f)
+            {
+                _warned = true;
                 TriggerSessionTimeWarning();
+            }
+
+            // Hard cap — auto-end the session and return to the menu.
+            if (_sessionTimer >= vrSessionMaxMinutes * 60f)
+            {
+                EndSession();
+                TransitionTo(AppState.MainMenu);
+            }
         }
 
         public void TransitionTo(AppState newState)
@@ -76,6 +92,7 @@ namespace VRLearning.Core
         {
             _sessionTimer = 0f;
             _sessionActive = true;
+            _warned = false;
             sessionManager.BeginSession(sessionManager.CurrentProfile);
         }
 
@@ -88,7 +105,8 @@ namespace VRLearning.Core
 
         private void TriggerSessionTimeWarning()
         {
-            UIManager.Instance?.ShowTimeWarning(vrSessionMaxMinutes);
+            // Minutes remaining until the hard cap.
+            UIManager.Instance?.ShowTimeWarning(vrSessionMaxMinutes - vrSessionWarnMinutes);
         }
     }
 

@@ -16,6 +16,7 @@ namespace VRLearning.Simulation.SimpleMachines
 
         private Rigidbody _handleRb;
         private Rigidbody _wheelRb;
+        private HingeJoint _wheelHinge;
         private bool _isHeld;
         private Vector3 _prevPos;
 
@@ -29,7 +30,10 @@ namespace VRLearning.Simulation.SimpleMachines
             grab.selectExited.AddListener(OnReleased);
 
             if (wheelTransform != null)
+            {
                 _wheelRb = wheelTransform.GetComponent<Rigidbody>();
+                _wheelHinge = wheelTransform.GetComponent<HingeJoint>();
+            }
         }
 
         private void OnGrabbed(SelectEnterEventArgs args)
@@ -65,8 +69,14 @@ namespace VRLearning.Simulation.SimpleMachines
             float deltaY = (_prevPos - transform.position).y;
             _prevPos = transform.position;
 
-            if (_wheelRb != null)
-                _wheelRb.AddTorque(new Vector3(-deltaY * torqueSensitivity, 0f, 0f), ForceMode.Force);
+            if (_wheelRb != null && _wheelHinge != null)
+            {
+                // Torque must be applied about the hinge's ACTUAL world-space axis (transformed
+                // from its local-space axis by the wheel's rotation) — a hardcoded world axis
+                // silently does nothing if it doesn't match the joint's one free rotation axis.
+                Vector3 worldAxis = wheelTransform.TransformDirection(_wheelHinge.axis).normalized;
+                _wheelRb.AddTorque(worldAxis * (deltaY * torqueSensitivity), ForceMode.Force);
+            }
         }
     }
 }

@@ -62,13 +62,21 @@ namespace VRLearning.Audio
             }
 
             _parts = FindFirstObjectByType<PartsInfoPanel>(FindObjectsInactive.Include);
-            if (_parts != null) _parts.PartChanged += PlayClick; // "part selected" click (fires on Next/Prev/first show)
+            if (_parts != null) _parts.PartChanged += OnPartChanged; // "part selected" click (fires on Next/Prev/first show)
         }
 
         private void OnDisable()
         {
             if (_quiz != null) { _quiz.Answered -= OnAnswered; _quiz.Completed -= PlayComplete; }
-            if (_parts != null) _parts.PartChanged -= PlayClick;
+            if (_parts != null) _parts.PartChanged -= OnPartChanged;
+        }
+
+        // Click when the parts tour changes — but stay silent if the part has narration, so the
+        // click doesn't talk over the voice-over.
+        private void OnPartChanged()
+        {
+            if (_parts != null && _parts.Current != null && _parts.Current.NarrationClip != null) return;
+            PlayClick();
         }
 
         private void Start()

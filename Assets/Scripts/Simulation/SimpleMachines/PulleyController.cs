@@ -16,7 +16,14 @@ namespace VRLearning.Simulation.SimpleMachines
 
         public float WeightCurrentHeight { get; private set; }
 
-        private float _prevAngle;
+        // Read-only geometry for the formula whiteboard.
+        public float WheelRadius     => wheelRadius;
+        public float WeightBaseHeight => weightBaseHeight;
+        public float WeightMaxHeight  => weightMaxHeight;
+        /// <summary>How far the load has been lifted from its resting height, in metres.</summary>
+        public float LoadLifted => Mathf.Max(0f, WeightCurrentHeight - weightBaseHeight);
+
+        private Quaternion _prevRot;
         private bool _initialized;
 
         private void Start()
@@ -28,7 +35,7 @@ namespace VRLearning.Simulation.SimpleMachines
                 weightBlock.position = new Vector3(p.x, WeightCurrentHeight, p.z);
             }
             if (wheelTransform != null)
-                _prevAngle = wheelTransform.eulerAngles.x;
+                _prevRot = wheelTransform.rotation;
             _initialized = true;
         }
 
@@ -36,9 +43,14 @@ namespace VRLearning.Simulation.SimpleMachines
         {
             if (!_initialized || wheelTransform == null || weightBlock == null) return;
 
-            float currentAngle = wheelTransform.eulerAngles.x;
-            float delta = Mathf.DeltaAngle(_prevAngle, currentAngle);
-            _prevAngle = currentAngle;
+            // Signed rotation (deg) about the wheel's axle (world Z) this step. Measured from the
+            // quaternion delta rather than eulerAngles, because the wheel sits at X=90° — a gimbal-lock
+            // pose where reading eulerAngles.z is unreliable.
+            Quaternion cur = wheelTransform.rotation;
+            (cur * Quaternion.Inverse(_prevRot)).ToAngleAxis(out float ang, out Vector3 axis);
+            if (ang > 180f) ang -= 360f;
+            float delta = ang * Mathf.Sign(Vector3.Dot(axis, Vector3.forward));
+            _prevRot = cur;
 
             float heightDelta = delta * Mathf.Deg2Rad * wheelRadius;
             WeightCurrentHeight = Mathf.Clamp(WeightCurrentHeight + heightDelta, weightBaseHeight, weightMaxHeight);

@@ -26,7 +26,7 @@ namespace VRLearning.Core
 
         public void LoadProfile(string learnerId)
         {
-            CurrentProfile = DataRepository.Instance.LoadLearner(learnerId)
+            CurrentProfile = DataRepository.Instance?.LoadLearner(learnerId)
                              ?? CreateGuestProfile();
             OnProfileLoaded?.Invoke(CurrentProfile);
         }
@@ -47,7 +47,7 @@ namespace VRLearning.Core
             if (ActiveSession == null) return;
             ActiveSession.EndTime     = DateTime.UtcNow;
             ActiveSession.ScorePercent = scorePercent;
-            DataRepository.Instance.SaveSession(ActiveSession);
+            DataRepository.Instance?.SaveSession(ActiveSession);
             OnSessionEnded?.Invoke(ActiveSession);
             ActiveSession = null;
         }

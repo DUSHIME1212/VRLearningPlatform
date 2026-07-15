@@ -123,6 +123,14 @@
     { "key": "scenario_rain_desc",           "value": "Robot ishaka kuva hanze." },
     { "key": "scenario_rain_condition",      "value": "NIBA imvura iri kuza..." },
     { "key": "scenario_gate_desc",           "value": "Robot igeze ku irembo." },
-    { "key": "scenario_gate_condition",      "value": "NIBA irembo rifunguye..." }
+    { "key": "scenario_gate_condition",      "value": "NIBA irembo rifunguye..." },
+    { "key": "coach_lever_1",                "value": "Kanda buto yo gufata (grip) ufate uburemere, hanyuma ubushyire ku giti. Gerageza impande zombi!" },
+    { "key": "coach_lever_2",                "value": "Egereza cyangwa uvane uburemere hafi y'hagati, urebe uko imibare ku kibaho ihinduka." },
+    { "key": "coach_pulley_1",               "value": "Fata igikoresho ukoresheje buto ya grip, hanyuma ukirurure hasi kugira ngo uzamure umuzigo." },
+    { "key": "coach_pulley_2",               "value": "Urabona? Uko urura umugozi ni ko umuzigo uzamuka." },
+    { "key": "coach_incline_1",              "value": "Fata agapfundikizo hanyuma ukasunikire ku ikaramba." },
+    { "key": "coach_incline_2",              "value": "Zunguza dial uhindure uko ikaramba iranguruye, urebe uko imbaraga zibangamira zihinduka." },
+    { "key": "coach_anatomy_1",              "value": "Erekeza kuri kimwe mu bice ukoresheje kontorole hanyuma ukande trigger kugira ngo ubyumve." },
+    { "key": "coach_anatomy_2",              "value": "Koresha buto za Komeza na Subira kugira ngo urebe buri gice." }
   ]
 }

@@ -821,9 +821,9 @@ MonoBehaviour:
   m_AndroidXRRightHandMesh: {fileID: 3133494152545806682, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
   m_HandMeshMaterial: {fileID: 0}
   m_DrawMeshes: 1
-  m_DebugDrawPrefab: {fileID: 0}
+  m_DebugDrawPrefab: {fileID: 6507399986997092475, guid: 254b742d65a15d14b9df756ae77de868, type: 3}
   m_DebugDrawJoints: 0
-  m_VelocityPrefab: {fileID: 0}
+  m_VelocityPrefab: {fileID: 8538602047018081646, guid: 629fd7882ec6bfc499a5fcf20035282b, type: 3}
   m_VelocityType: 0
 --- !u!1 &3713475133200884027
 GameObject:
@@ -1475,7 +1475,7 @@ Transform:
   m_GameObject: {fileID: 6325474038659899963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.36144, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1811,8 +1811,8 @@ MonoBehaviour:
   m_Camera: {fileID: 7484060787113993836}
   m_OriginBaseGameObject: {fileID: 9045344433636916761}
   m_CameraFloorOffsetObject: {fileID: 6325474038659899963}
-  m_RequestedTrackingOriginMode: 2
-  m_CameraYOffset: 1.36144
+  m_RequestedTrackingOriginMode: 1
+  m_CameraYOffset: 2
 --- !u!143 &407402603430641547
 CharacterController:
   m_ObjectHideFlags: 0
