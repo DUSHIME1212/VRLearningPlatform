@@ -26,6 +26,12 @@ namespace VRLearning.Parts
         [TextArea(2, 4)] public string DescriptionEN;
         [TextArea(2, 4)] public string DescriptionRW;
 
+        [Header("Narration")]
+        [Tooltip("Narration script (English) fed to the audio generator; longer/warmer than the description.")]
+        [TextArea(2, 6)] public string NarrationEN;
+        [Tooltip("Generated voice-over clip; played through AudioManager.PlayVO when this part is selected.")]
+        public AudioClip NarrationClip;
+
         [Header("Highlight")]
         [Tooltip("Renderers tinted when this part is hovered/selected. Empty = all child renderers.")]
         [SerializeField] private Renderer[] highlightRenderers;

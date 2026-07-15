@@ -3,6 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using TMPro;
 using Unity.VRTemplate;
@@ -20,6 +21,8 @@ namespace VRLearning.Editor
         const string SODir         = "Assets/ScriptableObjects/Puzzles/SimpleMachines";
         const string PhysicsDir    = "Assets/Physics";
         const string StarPrefabPath = "Assets/Prefabs/UI/StarDisplay.prefab";
+        const string WhiteboardPrefabPath = "Assets/Prefabs/UI/FormulaWhiteboard.prefab";
+        const string WireRopePrefabPath   = "Assets/Prefabs/Simulation/WireRope.prefab";
 
         // ─────────────────────────────────────────────────────────
         // MENU ITEMS
@@ -75,22 +78,30 @@ namespace VRLearning.Editor
             var leverCtrl = GetOrAdd<LeverController>(plank);
             var leverPuzz = GetOrAdd<LeverPuzzleController>(plank);
 
-            // Snap zones as children of LeverPlank
-            var snapLGo = GetOrCreateChild(plank, "SnapZone_Left");
-            snapLGo.transform.localPosition = new Vector3(-0.9f, 0.05f, 0f);
-            snapLGo.transform.localRotation = Quaternion.identity;
-            var szL = GetOrAdd<WeightSnapZone>(snapLGo);
-            var scL = GetOrAdd<SphereCollider>(snapLGo);
-            scL.isTrigger = true;
-            scL.radius    = 0.25f;
+            // Snap notches along both arms — the child changes the moment arm (distance) by
+            // choosing a notch, and the balance + formula update live. Clean up the old
+            // single-zone-per-side layout from earlier runs first.
+            DestroyChildIfExists(plank, "SnapZone_Left");
+            DestroyChildIfExists(plank, "SnapZone_Right");
 
-            var snapRGo = GetOrCreateChild(plank, "SnapZone_Right");
-            snapRGo.transform.localPosition = new Vector3(0.9f, 0.05f, 0f);
-            snapRGo.transform.localRotation = Quaternion.identity;
-            var szR = GetOrAdd<WeightSnapZone>(snapRGo);
-            var scR = GetOrAdd<SphereCollider>(snapRGo);
-            scR.isTrigger = true;
-            scR.radius    = 0.25f;
+            var leverZones = new List<WeightSnapZone>();
+            float[] notchArms = { 0.3f, 0.6f, 0.9f };
+            foreach (float arm in notchArms)
+            {
+                foreach (int sign in new[] { -1, 1 })
+                {
+                    float x = arm * sign;
+                    string zoneName = $"SnapZone_{(sign < 0 ? "L" : "R")}{Mathf.RoundToInt(arm * 10)}";
+                    var zGo = GetOrCreateChild(plank, zoneName);
+                    zGo.transform.localPosition = new Vector3(x, 0.05f, 0f);
+                    zGo.transform.localRotation = Quaternion.identity;
+                    var sz = GetOrAdd<WeightSnapZone>(zGo);
+                    var sc = GetOrAdd<SphereCollider>(zGo);
+                    sc.isTrigger = true;
+                    sc.radius    = 0.12f;
+                    leverZones.Add(sz);
+                }
+            }
 
             // Force arrows
             var arrowL = CreateForceArrow(plank, "ForceArrow_Left",  new Vector3(-0.7f, 0.15f, 0f));
@@ -121,12 +132,27 @@ namespace VRLearning.Editor
             // Wire LeverController
             using (var so = new SerializedObjectScope(leverCtrl))
             {
-                so.Prop("leftZone").objectReferenceValue          = szL;
-                so.Prop("rightZone").objectReferenceValue         = szR;
+                var zonesProp = so.Prop("zones");
+                zonesProp.arraySize = leverZones.Count;
+                for (int i = 0; i < leverZones.Count; i++)
+                    zonesProp.GetArrayElementAtIndex(i).objectReferenceValue = leverZones[i];
+
                 so.Prop("leverRenderer").objectReferenceValue     = plank.GetComponent<MeshRenderer>();
                 so.Prop("successParticles").objectReferenceValue  = ps;
                 so.Prop("leftArrow").objectReferenceValue         = arrowL;
                 so.Prop("rightArrow").objectReferenceValue        = arrowR;
+            }
+
+            // Colour-matched formula whiteboard, hovering above the lever.
+            var leverBoard = CreateFormulaWhiteboard("FormulaBoard_Lever",
+                new Vector3(0f, 2.6f, 2f), out var lbTitle, out var lbFormula, out var lbResult);
+            var leverHud = GetOrAdd<LeverFormulaHUD>(leverBoard);
+            using (var so = new SerializedObjectScope(leverHud))
+            {
+                so.Prop("lever").objectReferenceValue        = leverCtrl;
+                so.Prop("titleLabel").objectReferenceValue   = lbTitle;
+                so.Prop("formulaLabel").objectReferenceValue = lbFormula;
+                so.Prop("resultLabel").objectReferenceValue  = lbResult;
             }
 
             // Wire LeverPuzzleController
@@ -253,6 +279,32 @@ namespace VRLearning.Editor
                 so.Prop("puzzleData").objectReferenceValue       = pulleyDef;
             }
 
+            // ── Real physics rope (Wire.cs) replacing the cosmetic LineRenderer ──────────────
+            // Start = fixed anchor at the top of the wheel; End = an anchor that rides on the load
+            // (a child empty with no Rigidbody, so the wire follows the load without physically
+            // fighting PulleyController's height drive). Generous slack keeps it stable.
+            var wireStart = GetOrCreateWorld("WireStartAnchor",
+                wheel.transform.position + Vector3.up * (0.25f + 0.05f));
+            var wireEnd = GetOrCreateChild(pwGo, "WireEndAnchor");
+            wireEnd.transform.localPosition = new Vector3(0f, 0.15f, 0f);
+
+            float ropeGap = Mathf.Max(0.6f, wireStart.transform.position.y - wireEnd.transform.position.y);
+            var wireRope = InstantiateWireRope("WireRope", wireStart.transform, wireEnd.transform, ropeGap * 1.15f);
+            // Hide the old cosmetic rope — the Wire draws the rope now.
+            lr.enabled = false;
+
+            // Pulley formula whiteboard (live lift height).
+            var pulleyBoard = CreateFormulaWhiteboard("FormulaBoard_Pulley",
+                new Vector3(-1.0f, 2.2f, 2f), out var pbTitle, out var pbFormula, out var pbResult);
+            var pulleyHud = GetOrAdd<PulleyFormulaHUD>(pulleyBoard);
+            using (var so = new SerializedObjectScope(pulleyHud))
+            {
+                so.Prop("pulley").objectReferenceValue       = pulleyCtrl;
+                so.Prop("titleLabel").objectReferenceValue   = pbTitle;
+                so.Prop("formulaLabel").objectReferenceValue = pbFormula;
+                so.Prop("resultLabel").objectReferenceValue  = pbResult;
+            }
+
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             Debug.Log("[SimpleMachinesSetup] Pulley scene done.");
@@ -351,6 +403,18 @@ namespace VRLearning.Editor
             {
                 so.Prop("planeController").objectReferenceValue = planeCtrl;
                 so.Prop("puzzleData").objectReferenceValue      = inclineDef;
+            }
+
+            // Inclined-plane formula whiteboard (MA constant + live friction μ).
+            var inclineBoard = CreateFormulaWhiteboard("FormulaBoard_Incline",
+                new Vector3(-1.2f, 2.2f, 2f), out var ibTitle, out var ibFormula, out var ibResult);
+            var inclineHud = GetOrAdd<InclinedPlaneFormulaHUD>(inclineBoard);
+            using (var so = new SerializedObjectScope(inclineHud))
+            {
+                so.Prop("plane").objectReferenceValue        = planeCtrl;
+                so.Prop("titleLabel").objectReferenceValue   = ibTitle;
+                so.Prop("formulaLabel").objectReferenceValue = ibFormula;
+                so.Prop("resultLabel").objectReferenceValue  = ibResult;
             }
 
             EditorSceneManager.MarkSceneDirty(scene);
@@ -482,7 +546,10 @@ namespace VRLearning.Editor
             var wb = GetOrAdd<WeightBlock>(go);
 
             using (var so = new SerializedObjectScope(wb))
+            {
                 so.Prop("weightValue").floatValue = weightValue;
+                so.Prop("DisplayColor").colorValue = color;   // so the whiteboard can colour-match
+            }
 
             return wb;
         }
@@ -571,8 +638,176 @@ namespace VRLearning.Editor
         }
 
         // ─────────────────────────────────────────────────────────
+        // FORMULA WHITEBOARD  (reusable world-space Canvas prefab)
+        // ─────────────────────────────────────────────────────────
+
+        // Instantiate the blank whiteboard prefab at worldPos and hand back its three text slots.
+        // The caller adds the machine-specific FormulaHUD subclass and wires these in.
+        static GameObject CreateFormulaWhiteboard(string name, Vector3 worldPos,
+            out TMP_Text title, out TMP_Text formula, out TMP_Text result)
+        {
+            var prefab = GetOrCreateWhiteboardPrefab();
+            var go = GameObject.Find(name);
+            if (go == null)
+            {
+                go = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                go.name = name;
+            }
+            go.transform.position = worldPos;
+
+            title   = go.transform.Find("Title").GetComponent<TMP_Text>();
+            formula = go.transform.Find("Formula").GetComponent<TMP_Text>();
+            result  = go.transform.Find("Result").GetComponent<TMP_Text>();
+            return go;
+        }
+
+        static GameObject GetOrCreateWhiteboardPrefab()
+        {
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(WhiteboardPrefabPath);
+            if (existing != null) return existing;
+
+            EnsureDir("Assets/Prefabs");
+            EnsureDir("Assets/Prefabs/UI");
+
+            var temp   = BuildWhiteboardObject("FormulaWhiteboard");
+            var prefab = PrefabUtility.SaveAsPrefabAsset(temp, WhiteboardPrefabPath);
+            Object.DestroyImmediate(temp);
+            return prefab;
+        }
+
+        // Builds a child-friendly world-space whiteboard: cream panel + Title / Formula / Result text.
+        static GameObject BuildWhiteboardObject(string name)
+        {
+            var go     = new GameObject(name);
+            var canvas = go.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+
+            var rt = go.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(440, 320);
+            go.transform.localScale = Vector3.one * (0.8f / 440f);   // ~0.8 m wide board
+
+            var panel = new GameObject("Panel");
+            panel.transform.SetParent(go.transform, false);
+            var img = panel.AddComponent<Image>();
+            img.color = new Color(0.99f, 0.98f, 0.92f, 0.97f);
+            var prt = panel.GetComponent<RectTransform>();
+            prt.anchorMin = Vector2.zero; prt.anchorMax = Vector2.one;
+            prt.offsetMin = Vector2.zero; prt.offsetMax = Vector2.zero;
+
+            CreateWhiteboardText(go, "Title",   new Vector2(0f, 120f),  new Vector2(420, 64),  42f,
+                new Color(0.13f, 0.13f, 0.2f),  FontStyles.Bold);
+            CreateWhiteboardText(go, "Formula", new Vector2(0f, 10f),   new Vector2(420, 150), 30f,
+                new Color(0.10f, 0.10f, 0.12f), FontStyles.Normal);
+            CreateWhiteboardText(go, "Result",  new Vector2(0f, -120f), new Vector2(420, 64),  34f,
+                new Color(0.10f, 0.10f, 0.12f), FontStyles.Bold);
+            return go;
+        }
+
+        static TMP_Text CreateWhiteboardText(GameObject canvasGo, string name, Vector2 anchoredPos,
+            Vector2 size, float fontSize, Color color, FontStyles style)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(canvasGo.transform, false);
+            var tmp = go.AddComponent<TextMeshProUGUI>();
+            tmp.fontSize  = fontSize;
+            tmp.color     = color;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.fontStyle = style;
+            tmp.richText  = true;
+            var rt = go.GetComponent<RectTransform>();
+            rt.anchoredPosition = anchoredPos;
+            rt.sizeDelta        = size;
+            return tmp;
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // WIRE ROPE  (reusable physics-rope prefab, built on Wire.cs)
+        // ─────────────────────────────────────────────────────────
+
+        static GameObject InstantiateWireRope(string name, Transform start, Transform end, float totalLength)
+        {
+            var prefab = GetOrCreateWireRopePrefab();
+            var go = GameObject.Find(name);
+            if (go == null)
+            {
+                go = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                go.name = name;
+            }
+            go.transform.position = start.position;
+
+            var wire = go.GetComponent<Wire>();
+            using (var so = new SerializedObjectScope(wire))
+            {
+                so.Prop("start").objectReferenceValue = start;
+                so.Prop("end").objectReferenceValue   = end;
+                so.Prop("totalLength").floatValue      = totalLength;
+            }
+
+            var wlr = go.GetComponent<WireLineRenderer>();
+            using (var so = new SerializedObjectScope(wlr))
+            {
+                so.Prop("start").objectReferenceValue = start;
+                so.Prop("end").objectReferenceValue   = end;
+            }
+            return go;
+        }
+
+        static GameObject GetOrCreateWireRopePrefab()
+        {
+            var existing = AssetDatabase.LoadAssetAtPath<GameObject>(WireRopePrefabPath);
+            if (existing != null) return existing;
+
+            EnsureDir("Assets/Prefabs");
+            EnsureDir("Assets/Prefabs/Simulation");
+
+            var root = new GameObject("WireRope");
+
+            var line = root.AddComponent<LineRenderer>();
+            line.startWidth        = 0.02f;
+            line.endWidth          = 0.02f;
+            line.numCapVertices    = 2;
+            line.numCornerVertices = 2;
+            line.useWorldSpace     = true;
+            var ropeShader = Shader.Find("Universal Render Pipeline/Unlit")
+                             ?? Shader.Find("Sprites/Default") ?? Shader.Find("Standard");
+            line.sharedMaterial = new Material(ropeShader) { color = new Color(0.25f, 0.18f, 0.12f) };
+
+            var segments = new GameObject("Segments");
+            segments.transform.SetParent(root.transform, false);
+
+            var wire = root.AddComponent<Wire>();
+            using (var so = new SerializedObjectScope(wire))
+            {
+                so.Prop("segmentsParent").objectReferenceValue = segments.transform;
+                so.Prop("segmentCount").intValue        = 12;
+                so.Prop("totalLength").floatValue        = 1.6f;
+                so.Prop("totalWeight").floatValue        = 0.4f;
+                so.Prop("usePhysics").boolValue          = true;
+                so.Prop("radius").floatValue             = 0.02f;
+                so.Prop("drag").floatValue               = 0.6f;
+                so.Prop("angularDrag").floatValue        = 1.2f;
+                so.Prop("swingLimitAngle").floatValue    = 10f;
+                so.Prop("colliderShape").enumValueIndex  = 1; // Capsule
+            }
+
+            var wlr = root.AddComponent<WireLineRenderer>();
+            using (var so = new SerializedObjectScope(wlr))
+                so.Prop("segmentsParent").objectReferenceValue = segments.transform;
+
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, WireRopePrefabPath);
+            Object.DestroyImmediate(root);
+            return prefab;
+        }
+
+        // ─────────────────────────────────────────────────────────
         // GENERIC UTILITIES
         // ─────────────────────────────────────────────────────────
+
+        static void DestroyChildIfExists(GameObject parent, string childName)
+        {
+            var t = parent.transform.Find(childName);
+            if (t != null) Object.DestroyImmediate(t.gameObject);
+        }
 
         static T GetOrAdd<T>(GameObject go) where T : Component
         {

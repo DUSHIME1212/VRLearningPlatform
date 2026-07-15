@@ -116,6 +116,14 @@
     { "key": "scenario_rain_desc",           "value": "The robot wants to go outside." },
     { "key": "scenario_rain_condition",      "value": "IF it is raining..." },
     { "key": "scenario_gate_desc",           "value": "The robot has reached the gate." },
-    { "key": "scenario_gate_condition",      "value": "IF the gate is open..." }
+    { "key": "scenario_gate_condition",      "value": "IF the gate is open..." },
+    { "key": "coach_lever_1",                "value": "Squeeze the grip button to grab a weight, then place it on the bar. Try both sides!" },
+    { "key": "coach_lever_2",                "value": "Move a weight closer to or farther from the middle and watch the whiteboard numbers change." },
+    { "key": "coach_pulley_1",               "value": "Grab the handle with the grip button and pull it down to lift the load." },
+    { "key": "coach_pulley_2",               "value": "See? How far you pull the rope is how far the load rises." },
+    { "key": "coach_incline_1",              "value": "Grab the block and push it up the ramp." },
+    { "key": "coach_incline_2",              "value": "Turn the dial to change how slippery the ramp is, and watch the friction change." },
+    { "key": "coach_anatomy_1",              "value": "Point at a part with your controller and pull the trigger to hear about it." },
+    { "key": "coach_anatomy_2",              "value": "Use the Next and Back buttons to explore every part." }
   ]
 }

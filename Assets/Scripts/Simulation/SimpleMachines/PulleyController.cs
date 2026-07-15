@@ -16,6 +16,13 @@ namespace VRLearning.Simulation.SimpleMachines
 
         public float WeightCurrentHeight { get; private set; }
 
+        // Read-only geometry for the formula whiteboard.
+        public float WheelRadius     => wheelRadius;
+        public float WeightBaseHeight => weightBaseHeight;
+        public float WeightMaxHeight  => weightMaxHeight;
+        /// <summary>How far the load has been lifted from its resting height, in metres.</summary>
+        public float LoadLifted => Mathf.Max(0f, WeightCurrentHeight - weightBaseHeight);
+
         private Quaternion _prevRot;
         private bool _initialized;
 

@@ -30,9 +30,13 @@ namespace VRLearning.Parts
         [SerializeField] private bool selectFirstOnStart = false;
 
         private int _current = -1;
+        private int _lastNarratedIndex = -1;
 
         /// <summary>Raised whenever the displayed part changes. (For audio/FX.)</summary>
         public event System.Action PartChanged;
+
+        /// <summary>The part currently shown, or null. Lets listeners (e.g. UISoundKit) react to it.</summary>
+        public PartInfo Current => (_current >= 0 && _current < parts.Count) ? parts[_current] : null;
 
         private void Awake()
         {
@@ -76,6 +80,15 @@ namespace VRLearning.Parts
             if (descriptionLabel != null) descriptionLabel.text = part.DisplayDescription;
             if (counterLabel != null)
                 counterLabel.text = _current >= 0 ? $"{_current + 1} / {parts.Count}" : string.Empty;
+
+            // Narrate the newly selected part (only when it actually changes, so re-selecting the
+            // same part via hover doesn't restart the clip). PlayVO stops any previous narration.
+            if (_current != _lastNarratedIndex)
+            {
+                _lastNarratedIndex = _current;
+                if (part.NarrationClip != null)
+                    VRLearning.Core.AudioManager.Instance?.PlayVO(part.NarrationClip);
+            }
 
             PartChanged?.Invoke();
         }

@@ -9,6 +9,16 @@ namespace VRLearning.Simulation.SimpleMachines
         public bool IsOccupied { get; private set; }
         public WeightBlock Occupant { get; private set; }
 
+        /// <summary>
+        /// Signed horizontal distance of this notch from the fulcrum, in the lever plank's
+        /// local space (localPosition.x). Sign tells the side (negative = left, positive = right);
+        /// the magnitude is the moment arm used for torque = weight * distance.
+        /// </summary>
+        public float SignedDistance => transform.localPosition.x;
+
+        /// <summary>Absolute moment arm from the fulcrum.</summary>
+        public float MomentArm => Mathf.Abs(transform.localPosition.x);
+
         private void Awake()
         {
             // Create a snapAnchor child if none assigned

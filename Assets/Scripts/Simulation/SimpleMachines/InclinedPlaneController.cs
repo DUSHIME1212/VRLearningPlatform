@@ -18,6 +18,10 @@ namespace VRLearning.Simulation.SimpleMachines
         public bool BlockReachedBottom { get; private set; }
         public float SlideTime => BlockReachedBottom ? _slideEndTime - _slideStartTime : Time.time - _slideStartTime;
 
+        /// <summary>Live coefficient of friction currently applied (read by the formula whiteboard).</summary>
+        public float CurrentFriction { get; private set; }
+        public bool BlockMoving { get; private set; }
+
         public event Action<float> OnBlockReachedBottom;
 
         private float _slideStartTime;
@@ -45,6 +49,7 @@ namespace VRLearning.Simulation.SimpleMachines
                 blockMaterial.staticFriction  = f;
             }
 
+            CurrentFriction = f;
             frictionValueLabel?.SetOverrideText($"μ = {f:F2}");
         }
 
@@ -53,6 +58,7 @@ namespace VRLearning.Simulation.SimpleMachines
             if (BlockReachedBottom || slidingBlock == null) return;
 
             float speed = slidingBlock.linearVelocity.magnitude;
+            BlockMoving = speed > 0.05f;
 
             // Slide audio
             if (blockSlideSource != null)
