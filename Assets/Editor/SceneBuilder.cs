@@ -234,6 +234,7 @@ public static class SceneBuilder
         var bgImg = bg.AddComponent<Image>();
         bgImg.color = new Color(theme.r * 0.3f, theme.g * 0.3f, theme.b * 0.3f, 0.88f);
         bgImg.raycastTarget = false;
+        ApplyRounded(bgImg);
 
         // EN title
         AddTMP(titleCanvas.transform, "TitleEN", titleEN,   new Vector2(0, 1),   new Vector2(0, 1),   new Vector2(24, -18),  new Vector2(-24, -80),  52, FontStyles.Bold, Color.white);
@@ -262,6 +263,7 @@ public static class SceneBuilder
         Stretch(btnRT);
         var btnImg = btnGO.AddComponent<Image>();
         btnImg.color = new Color(theme.r * 0.6f, theme.g * 0.6f, theme.b * 0.6f, 1f);
+        ApplyRounded(btnImg, pixelsPerUnitMultiplier: 4f);
         var btn    = btnGO.AddComponent<Button>();
         btn.targetGraphic = btnImg;
 
@@ -338,5 +340,19 @@ public static class SceneBuilder
         tmp.alignment      = TextAlignmentOptions.Center;
         tmp.color          = color;
         tmp.raycastTarget  = false;
+    }
+
+    const string RoundedSpritePath = "Assets/VRTemplateAssets/Sprites/UI/Round Radius 10.png";
+
+    // Applies the project's shared 9-sliced rounded-rect sprite to a solid-color panel/button
+    // Image. pixelsPerUnitMultiplier > 1 scales the effective border down for smaller buttons, so
+    // the corner reads as a subtle round instead of clamping into a pill.
+    static void ApplyRounded(Image img, float pixelsPerUnitMultiplier = 1f)
+    {
+        var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(RoundedSpritePath);
+        if (sprite == null) { Debug.LogWarning("[SceneBuilder] Round Radius 10 sprite not found."); return; }
+        img.sprite = sprite;
+        img.type = Image.Type.Sliced;
+        img.pixelsPerUnitMultiplier = pixelsPerUnitMultiplier;
     }
 }

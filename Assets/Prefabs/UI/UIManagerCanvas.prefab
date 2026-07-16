@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 503535171475849026}
   - component: {fileID: 6347788895947937428}
   - component: {fileID: 1003328518519744168}
+  - component: {fileID: 9126206085586978749}
   m_Layer: 0
   m_Name: SuccessPanel
   m_TagString: Untagged
@@ -59,8 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.05, g: 0.2, b: 0.05, a: 0.9}
+  m_Material: {fileID: 2100000, guid: 41f50b9c536ae924c8b6009860edb818, type: 2}
+  m_Color: {r: 0.05, g: 0.2, b: 0.05, a: 0.4}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -89,6 +90,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &9126206085586978749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855147483077957528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd9fc759933de04da41d58a3cf6bd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.UI.UIGlassRounder
+  cornerRadiusPx: 24
 --- !u!1 &1009894509382883528
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +115,7 @@ GameObject:
   - component: {fileID: 6129212106670465950}
   - component: {fileID: 8478962218051163669}
   - component: {fileID: 1254899058945248427}
+  - component: {fileID: 1784435856285485818}
   m_Layer: 0
   m_Name: MainMenuPanel
   m_TagString: Untagged
@@ -147,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7}
+  m_Material: {fileID: 2100000, guid: 41f50b9c536ae924c8b6009860edb818, type: 2}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.4}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -177,6 +192,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1784435856285485818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009894509382883528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd9fc759933de04da41d58a3cf6bd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.UI.UIGlassRounder
+  cornerRadiusPx: 24
 --- !u!1 &2970038596299224593
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +319,7 @@ GameObject:
   - component: {fileID: 5238212143786799627}
   - component: {fileID: 4613388363663208509}
   - component: {fileID: 7284258177605376123}
+  - component: {fileID: 3497552810761247537}
   m_Layer: 0
   m_Name: HintPanel
   m_TagString: Untagged
@@ -338,8 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.05, g: 0.05, b: 0.15, a: 0.9}
+  m_Material: {fileID: 2100000, guid: 41f50b9c536ae924c8b6009860edb818, type: 2}
+  m_Color: {r: 0.05, g: 0.05, b: 0.15, a: 0.4}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -368,6 +397,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &3497552810761247537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3606665797268187300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd9fc759933de04da41d58a3cf6bd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.UI.UIGlassRounder
+  cornerRadiusPx: 24
 --- !u!1 &3637376682232361974
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +422,7 @@ GameObject:
   - component: {fileID: 2358119538652258011}
   - component: {fileID: 3110267519231387461}
   - component: {fileID: 2136368729361878307}
+  - component: {fileID: 3615555759732529549}
   m_Layer: 0
   m_Name: PausePanel
   m_TagString: Untagged
@@ -426,8 +469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0.1, a: 0.8}
+  m_Material: {fileID: 2100000, guid: 41f50b9c536ae924c8b6009860edb818, type: 2}
+  m_Color: {r: 0, g: 0, b: 0.1, a: 0.4}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -456,6 +499,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &3615555759732529549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637376682232361974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd9fc759933de04da41d58a3cf6bd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.UI.UIGlassRounder
+  cornerRadiusPx: 24
 --- !u!1 &3819728895773874755
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +661,7 @@ GameObject:
   - component: {fileID: 1986886041745216211}
   - component: {fileID: 8043921075788616457}
   - component: {fileID: 2163398399523379000}
+  - component: {fileID: 8715218985092038401}
   m_Layer: 0
   m_Name: SessionWarningPanel
   m_TagString: Untagged
@@ -652,8 +709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.3, g: 0.1, b: 0, a: 0.9}
+  m_Material: {fileID: 2100000, guid: 41f50b9c536ae924c8b6009860edb818, type: 2}
+  m_Color: {r: 0.3, g: 0.1, b: 0, a: 0.4}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -682,6 +739,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &8715218985092038401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644834766357954284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd9fc759933de04da41d58a3cf6bd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.UI.UIGlassRounder
+  cornerRadiusPx: 24
 --- !u!1 &8715381229538957110
 GameObject:
   m_ObjectHideFlags: 0

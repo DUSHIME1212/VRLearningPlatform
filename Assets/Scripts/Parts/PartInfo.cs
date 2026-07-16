@@ -42,6 +42,8 @@ namespace VRLearning.Parts
         public event Action<PartInfo> OnSelected;
         public event Action<PartInfo> OnHoverEnter;
         public event Action<PartInfo> OnHoverExit;
+        public event Action<PartInfo> OnGrabStart;
+        public event Action<PartInfo> OnGrabEnd;
 
         private XRBaseInteractable _interactable;
         private MaterialPropertyBlock _mpb;
@@ -53,38 +55,62 @@ namespace VRLearning.Parts
         public string DisplayName => Localised(NameEN, NameRW);
         public string DisplayDescription => Localised(DescriptionEN, DescriptionRW);
 
+        /// <summary>The part's own local scale as authored in the scene, captured once at Awake.
+        /// Shared source of truth for anything that scales a part up (viewpoint inspection) and
+        /// needs to know what "normal" looks like (e.g. on reassembly).</summary>
+        [NonSerialized] public Vector3 OriginalLocalScale;
+
         private void Awake()
         {
             if (highlightRenderers == null || highlightRenderers.Length == 0)
                 highlightRenderers = GetComponentsInChildren<Renderer>();
             _mpb = new MaterialPropertyBlock();
+            OriginalLocalScale = transform.localScale;
         }
 
-        private void OnEnable()
+        private void OnEnable() => RefreshInteractable();
+
+        private void OnDisable()
         {
+            UnhookInteractable();
+            SetHighlight(false);
+        }
+
+        /// <summary>(Re)binds to whatever XRBaseInteractable currently sits on this GameObject.
+        /// Safe to call more than once (unsubscribes any stale reference first). Anatomy parts get
+        /// their XRGrabInteractable added at runtime by GrabbablePartsSetup, AFTER this component's
+        /// own OnEnable already ran and cached null — GrabbablePartsSetup calls this right after
+        /// adding the component to close that gap. No-op (interactable stays null) for parts that
+        /// never get one, e.g. the rig-animated Breathing scenes.</summary>
+        public void RefreshInteractable()
+        {
+            UnhookInteractable();
             _interactable = GetComponent<XRBaseInteractable>();
             if (_interactable != null)
             {
                 _interactable.hoverEntered.AddListener(HandleHoverEnter);
                 _interactable.hoverExited.AddListener(HandleHoverExit);
                 _interactable.selectEntered.AddListener(HandleSelect);
+                _interactable.selectEntered.AddListener(HandleGrabStart);
+                _interactable.selectExited.AddListener(HandleGrabEnd);
             }
         }
 
-        private void OnDisable()
+        private void UnhookInteractable()
         {
-            if (_interactable != null)
-            {
-                _interactable.hoverEntered.RemoveListener(HandleHoverEnter);
-                _interactable.hoverExited.RemoveListener(HandleHoverExit);
-                _interactable.selectEntered.RemoveListener(HandleSelect);
-            }
-            SetHighlight(false);
+            if (_interactable == null) return;
+            _interactable.hoverEntered.RemoveListener(HandleHoverEnter);
+            _interactable.hoverExited.RemoveListener(HandleHoverExit);
+            _interactable.selectEntered.RemoveListener(HandleSelect);
+            _interactable.selectEntered.RemoveListener(HandleGrabStart);
+            _interactable.selectExited.RemoveListener(HandleGrabEnd);
         }
 
         private void HandleHoverEnter(HoverEnterEventArgs _) { SetHighlight(true);  OnHoverEnter?.Invoke(this); }
         private void HandleHoverExit(HoverExitEventArgs _)   { SetHighlight(false); OnHoverExit?.Invoke(this); }
         private void HandleSelect(SelectEnterEventArgs _)    { Select(); }
+        private void HandleGrabStart(SelectEnterEventArgs _) { OnGrabStart?.Invoke(this); }
+        private void HandleGrabEnd(SelectExitEventArgs _)    { OnGrabEnd?.Invoke(this); }
 
         /// <summary>Programmatically select this part (also used by the tour buttons).</summary>
         public void Select()

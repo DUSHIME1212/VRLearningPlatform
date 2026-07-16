@@ -45,6 +45,7 @@ public static class UIBuilder
         StretchFull(bg);
         var bgImg = bg.gameObject.AddComponent<Image>();
         bgImg.color = new Color(0.15f, 0.15f, 0.25f, 0.85f);
+        ApplyRounded(bgImg);
 
         // BannerImage (top strip)
         var banner = NewRect("BannerImage", root, new Vector2(340, 140));
@@ -145,6 +146,7 @@ public static class UIBuilder
         playBtn.anchoredPosition = new Vector2(-16, 16);
         var playBtnImg = playBtn.gameObject.AddComponent<Image>();
         playBtnImg.color = new Color(0.25f, 0.6f, 0.25f);
+        ApplyRoundedButton(playBtnImg);
         var playBtnComp = playBtn.gameObject.AddComponent<Button>();
         playBtnComp.targetGraphic = playBtnImg;
 
@@ -188,6 +190,7 @@ public static class UIBuilder
         StretchFull(bg);
         var bgImg = bg.gameObject.AddComponent<Image>();
         bgImg.color = new Color(0.15f, 0.15f, 0.25f, 0.85f);
+        ApplyRounded(bgImg);
 
         // SelectedHighlight (outline, hidden by default)
         var highlight = NewRect("SelectedHighlight", root, Vector2.zero);
@@ -197,6 +200,7 @@ public static class UIBuilder
         var hlImg = highlight.gameObject.AddComponent<Image>();
         hlImg.color = new Color(0.4f, 0.8f, 1f, 0.8f);
         hlImg.raycastTarget = false;
+        ApplyRounded(hlImg);
         highlight.gameObject.SetActive(false);
 
         // ThumbnailImage (top half)
@@ -297,6 +301,7 @@ public static class UIBuilder
         var bgImg = bg.gameObject.AddComponent<Image>();
         bgImg.color = new Color(0.1f, 0.1f, 0.15f, 0.92f);
         bgImg.raycastTarget = false;
+        ApplyRounded(bgImg);
 
         var labelGO = NewRect("Label", root, Vector2.zero);
         StretchFull(labelGO);
@@ -376,6 +381,12 @@ public static class UIBuilder
             var img = p.gameObject.AddComponent<Image>();
             img.color = color;
             img.raycastTarget = false;
+            // Glassmorphism (same UIGlass.mat used by the FormulaWhiteboard panels) + rounded
+            // corners. Assigned here (not just hand-applied to the prefab asset) so re-running
+            // this builder can't silently regress the look.
+            var glassMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/UI/UIGlass.mat");
+            if (glassMat != null) img.material = glassMat;
+            p.gameObject.AddComponent<VRLearning.UI.UIGlassRounder>();
             p.gameObject.AddComponent<CanvasGroup>();
             p.gameObject.SetActive(false);
             return p.gameObject;
@@ -454,7 +465,9 @@ public static class UIBuilder
         // ── CourseListPanel ──
         var listPanel = NewRect("CourseListPanel", rootRT, Vector2.zero);
         StretchFull(listPanel);
-        listPanel.gameObject.AddComponent<Image>().color = new Color(0.08f, 0.08f, 0.12f, 0.95f);
+        var listPanelImg = listPanel.gameObject.AddComponent<Image>();
+        listPanelImg.color = new Color(0.08f, 0.08f, 0.12f, 0.95f);
+        ApplyRounded(listPanelImg);
         listPanel.gameObject.AddComponent<CanvasGroup>();
 
         var listVL = new GameObject("ListLayout").AddComponent<VerticalLayoutGroup>();
@@ -498,7 +511,9 @@ public static class UIBuilder
         // ── CourseDetailPanel ──
         var detailPanel = NewRect("CourseDetailPanel", rootRT, Vector2.zero);
         StretchFull(detailPanel);
-        detailPanel.gameObject.AddComponent<Image>().color = new Color(0.08f, 0.08f, 0.12f, 0.95f);
+        var detailPanelImg = detailPanel.gameObject.AddComponent<Image>();
+        detailPanelImg.color = new Color(0.08f, 0.08f, 0.12f, 0.95f);
+        ApplyRounded(detailPanelImg);
         detailPanel.gameObject.AddComponent<CanvasGroup>();
         var detailUI = detailPanel.gameObject.AddComponent<VRLearning.UI.CourseDetailUI>();
         detailPanel.gameObject.SetActive(false);
@@ -536,6 +551,7 @@ public static class UIBuilder
         backBtn.gameObject.AddComponent<LayoutElement>().preferredWidth = 100;
         var backBtnImg = backBtn.gameObject.AddComponent<Image>();
         backBtnImg.color = new Color(0.3f, 0.3f, 0.4f);
+        ApplyRoundedButton(backBtnImg);
         var backBtnComp = backBtn.gameObject.AddComponent<Button>();
         backBtnComp.targetGraphic = backBtnImg;
         var backLabelGO = NewRect("BackLabel", backBtn, Vector2.zero);
@@ -604,6 +620,7 @@ public static class UIBuilder
         playBtn.gameObject.AddComponent<LayoutElement>().preferredWidth = 160;
         var playBtnImg = playBtn.gameObject.AddComponent<Image>();
         playBtnImg.color = new Color(0.2f, 0.55f, 0.2f);
+        ApplyRoundedButton(playBtnImg);
         var playBtnComp = playBtn.gameObject.AddComponent<Button>();
         playBtnComp.targetGraphic = playBtnImg;
         playBtnComp.interactable  = false;
@@ -686,5 +703,25 @@ public static class UIBuilder
         string path = $"{PrefabRoot}/{name}.prefab";
         PrefabUtility.SaveAsPrefabAsset(go, path);
         Debug.Log($"[UIBuilder] Saved {path}");
+    }
+
+    const string RoundedSpritePath = "Assets/VRTemplateAssets/Sprites/UI/Round Radius 10.png";
+
+    // Applies the project's shared 9-sliced rounded-rect sprite to a solid-color panel Image.
+    // Use on backgrounds comfortably larger than the sprite's 40px border in both dimensions.
+    static void ApplyRounded(Image img)
+    {
+        var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(RoundedSpritePath);
+        if (sprite == null) { Debug.LogWarning("[UIBuilder] Round Radius 10 sprite not found."); return; }
+        img.sprite = sprite;
+        img.type = Image.Type.Sliced;
+    }
+
+    // Same, but for small buttons (roughly 40-80 units tall): scales the effective border down via
+    // pixelsPerUnitMultiplier so the corner reads as a subtle round instead of clamping into a pill.
+    static void ApplyRoundedButton(Image img, float pixelsPerUnitMultiplier = 4f)
+    {
+        ApplyRounded(img);
+        img.pixelsPerUnitMultiplier = pixelsPerUnitMultiplier;
     }
 }
