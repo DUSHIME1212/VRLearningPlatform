@@ -2242,7 +2242,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 450, y: -42}
-  m_SizeDelta: {x: 300, y: -62}
+  m_SizeDelta: {x: 1200, y: -62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1259798492
 MonoBehaviour:
@@ -2401,8 +2401,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 65d31ca9600c4654e886aa7bab36e94b, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2728,6 +2728,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2954504350376473560, guid: ad0e05b182c308648a67cd440e2f6e12, type: 3}
+      propertyPath: viewpointAnimator
+      value: 
+      objectReference: {fileID: 1320687857}
+    - target: {fileID: 2954504350376473560, guid: ad0e05b182c308648a67cd440e2f6e12, type: 3}
       propertyPath: selectFirstOnStart
       value: 1
       objectReference: {fileID: 0}
@@ -2775,6 +2779,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9166545742691084692, guid: ad0e05b182c308648a67cd440e2f6e12, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1320687856}
+    - targetCorrespondingSourceObject: {fileID: 9166545742691084692, guid: ad0e05b182c308648a67cd440e2f6e12, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1320687857}
   m_SourcePrefab: {fileID: 100100000, guid: ad0e05b182c308648a67cd440e2f6e12, type: 3}
 --- !u!1 &1320687855 stripped
 GameObject:
@@ -2800,6 +2807,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &1320687857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320687855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288f1ec431ae0304e8b4cce6368ad1e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VRLearning.Parts.PartViewpointAnimator
+  explodedView: {fileID: 910733065}
+  viewDistance: 0.45
+  inspectScaleMultiplier: 1.6
+  spinSpeedDegPerSec: 20
+  animSpeed: 2.5
 --- !u!21 &1334439810
 Material:
   serializedVersion: 8
@@ -4048,7 +4072,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 4
 --- !u!222 &1957962406
 CanvasRenderer:
   m_ObjectHideFlags: 0

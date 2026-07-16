@@ -684,13 +684,47 @@ namespace VRLearning.Editor
         // FORMULA WHITEBOARD  (reusable world-space Canvas prefab)
         // ─────────────────────────────────────────────────────────
 
+        // Finds every object named `name`, destroys any that are NOT a structurally-valid
+        // instance (per isValid) and any extra valid duplicates beyond the first, and returns
+        // the sole survivor (or null). Guards against the class of bug where a stale
+        // PrefabInstance is left behind after its source prefab is deleted/regenerated —
+        // GameObject.Find alone can't tell a healthy instance apart from a broken duplicate
+        // sharing the same name.
+        static GameObject GetOrCreateValidPrefabInstance(string name, System.Func<GameObject, bool> isValid)
+        {
+            GameObject valid = null;
+            foreach (var t in Object.FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (t.name != name || !t.gameObject.scene.IsValid()) continue;
+                if (!isValid(t.gameObject))
+                {
+                    Debug.LogWarning($"[SimpleMachinesSetup] Destroying invalid/stale '{name}' instance (unresolved prefab members).");
+                    Object.DestroyImmediate(t.gameObject);
+                }
+                else if (valid != null)
+                {
+                    Debug.LogWarning($"[SimpleMachinesSetup] Duplicate valid '{name}' instance found — destroying extra copy.");
+                    Object.DestroyImmediate(t.gameObject);
+                }
+                else valid = t.gameObject;
+            }
+            return valid;
+        }
+
         // Instantiate the blank whiteboard prefab at worldPos and hand back its three text slots.
         // The caller adds the machine-specific FormulaHUD subclass and wires these in.
         static GameObject CreateFormulaWhiteboard(string name, Vector3 worldPos,
             out TMP_Text title, out TMP_Text formula, out TMP_Text result)
         {
             var prefab = GetOrCreateWhiteboardPrefab();
-            var go = GameObject.Find(name);
+
+            bool IsValidWhiteboard(GameObject g) =>
+                g.transform.Find("Panel") != null &&
+                g.transform.Find("Title")?.GetComponent<TMP_Text>() != null &&
+                g.transform.Find("Formula")?.GetComponent<TMP_Text>() != null &&
+                g.transform.Find("Result")?.GetComponent<TMP_Text>() != null;
+
+            var go = GetOrCreateValidPrefabInstance(name, IsValidWhiteboard);
             if (go == null)
             {
                 go = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
@@ -732,7 +766,13 @@ namespace VRLearning.Editor
             var panel = new GameObject("Panel");
             panel.transform.SetParent(go.transform, false);
             var img = panel.AddComponent<Image>();
-            img.color = new Color(0.99f, 0.98f, 0.92f, 0.97f);
+            // Translucent cream tint (glassmorphism): the UIGlass shader layers a sheen gradient
+            // + edge highlight on top of this color/alpha, so it reads as tinted glass rather
+            // than a solid cream card.
+            img.color = new Color(0.99f, 0.98f, 0.92f, 0.38f);
+            var glassMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/UI/UIGlass.mat");
+            if (glassMat != null) img.material = glassMat;
+            panel.AddComponent<UIGlassRounder>();
             var prt = panel.GetComponent<RectTransform>();
             prt.anchorMin = Vector2.zero; prt.anchorMax = Vector2.one;
             prt.offsetMin = Vector2.zero; prt.offsetMax = Vector2.zero;
@@ -786,11 +826,11 @@ namespace VRLearning.Editor
                 so.Prop("totalLength").floatValue      = totalLength;
             }
 
-            var wlr = go.GetComponent<WireLineRenderer>();
-            using (var so = new SerializedObjectScope(wlr))
+            var wsm = go.GetComponent<WireSegmentMesh>();
+            using (var so = new SerializedObjectScope(wsm))
             {
-                so.Prop("start").objectReferenceValue = start;
-                so.Prop("end").objectReferenceValue   = end;
+                // segmentsParent stays wired to this instance's own "Segments" child (set once
+                // when the prefab was built); nothing else needs to change per-instance.
             }
             return go;
         }
@@ -804,16 +844,6 @@ namespace VRLearning.Editor
             EnsureDir("Assets/Prefabs/Simulation");
 
             var root = new GameObject("WireRope");
-
-            var line = root.AddComponent<LineRenderer>();
-            line.startWidth        = 0.02f;
-            line.endWidth          = 0.02f;
-            line.numCapVertices    = 2;
-            line.numCornerVertices = 2;
-            line.useWorldSpace     = true;
-            var ropeShader = Shader.Find("Universal Render Pipeline/Unlit")
-                             ?? Shader.Find("Sprites/Default") ?? Shader.Find("Standard");
-            line.sharedMaterial = new Material(ropeShader) { color = new Color(0.25f, 0.18f, 0.12f) };
 
             var segments = new GameObject("Segments");
             segments.transform.SetParent(root.transform, false);
@@ -833,9 +863,14 @@ namespace VRLearning.Editor
                 so.Prop("colliderShape").enumValueIndex  = 1; // Capsule
             }
 
-            var wlr = root.AddComponent<WireLineRenderer>();
-            using (var so = new SerializedObjectScope(wlr))
+            // Renders the rope as a chain of real 3D tube meshes (one per Wire segment, sized
+            // from that segment's own collider) instead of a flat camera-facing LineRenderer strip.
+            var wsm = root.AddComponent<WireSegmentMesh>();
+            using (var so = new SerializedObjectScope(wsm))
+            {
                 so.Prop("segmentsParent").objectReferenceValue = segments.transform;
+                so.Prop("ropeColor").colorValue = new Color(0.25f, 0.18f, 0.12f);
+            }
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, WireRopePrefabPath);
             Object.DestroyImmediate(root);

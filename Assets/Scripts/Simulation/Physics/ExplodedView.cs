@@ -28,6 +28,27 @@ namespace VRLearning.Simulation.Physics
         private bool      _exploded;
         private Coroutine _anim;
 
+        /// <summary>True while Explode()/Assemble() is actively animating parts' localPosition —
+        /// lets other systems driving the same transforms (e.g. a camera-viewpoint animator) defer
+        /// a frame instead of fighting this coroutine.</summary>
+        public bool IsAnimating => _anim != null;
+
+        /// <summary>Looks up a registered part's captured home pose (local to this transform's
+        /// parent). Returns false if `obj` isn't one of this view's registered parts.</summary>
+        public bool TryGetOrigin(Transform obj, out Vector3 localPos, out Quaternion localRot)
+        {
+            foreach (var p in parts)
+            {
+                if (p.obj != obj) continue;
+                localPos = p.originLocalPos;
+                localRot = p.originLocalRot;
+                return true;
+            }
+            localPos = default;
+            localRot = Quaternion.identity;
+            return false;
+        }
+
         private void Start()
         {
             foreach (var p in parts)
@@ -82,6 +103,7 @@ namespace VRLearning.Simulation.Physics
                 }
                 yield return null;
             }
+            _anim = null;
         }
     }
 }

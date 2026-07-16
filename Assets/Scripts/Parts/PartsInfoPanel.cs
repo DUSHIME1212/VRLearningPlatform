@@ -27,6 +27,8 @@ namespace VRLearning.Parts
 
         [Header("Optional")]
         [SerializeField] private ExplodedView explodedView;
+        [Tooltip("If set, the selected part animates to a centered, scaled-up viewpoint in front of the camera. Leave unassigned for scenes where parts shouldn't fly to the camera (e.g. rig-animated Breathing scenes).")]
+        [SerializeField] private PartViewpointAnimator viewpointAnimator;
         [SerializeField] private bool selectFirstOnStart = false;
 
         private int _current = -1;
@@ -70,6 +72,7 @@ namespace VRLearning.Parts
         public void Display(PartInfo part)
         {
             if (part == null) return;
+            var previous = Current; // capture before _current is reassigned below
             _current = parts.IndexOf(part);
 
             foreach (var p in parts)
@@ -89,6 +92,8 @@ namespace VRLearning.Parts
                 if (part.NarrationClip != null)
                     VRLearning.Core.AudioManager.Instance?.PlayVO(part.NarrationClip);
             }
+
+            if (viewpointAnimator != null) viewpointAnimator.FocusPart(part, previous);
 
             PartChanged?.Invoke();
         }

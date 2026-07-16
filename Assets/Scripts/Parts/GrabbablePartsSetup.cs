@@ -55,6 +55,15 @@ namespace VRLearning.Parts
             var grab = go.AddComponent<XRGrabInteractable>();
             grab.throwOnDetach = false;          // no fling on release
             grab.useDynamicAttach = true;        // grab from where you touch it
+
+            // PartInfo's own OnEnable already ran (and cached a null interactable) before this
+            // method runs, since it's called from SceneManager.sceneLoaded — fires after every
+            // scene object's OnEnable. Re-bind now that the interactable actually exists.
+            go.GetComponent<PartInfo>()?.RefreshInteractable();
+
+            if (go.GetComponent<PartSocket>() == null) go.AddComponent<PartSocket>();
+            go.GetComponent<PartSocket>().RefreshInteractable();
+
             return true;
         }
     }
