@@ -17,10 +17,26 @@ namespace VRLearning.Core
             if (prefab == null)
             {
                 Debug.LogWarning("[AppBootstrap] Resources/Managers prefab not found — core services will not run.");
-                return;
             }
-            var go = Object.Instantiate(prefab);
-            go.name = "Managers";
+            else
+            {
+                var go = Object.Instantiate(prefab);
+                go.name = "Managers";
+            }
+
+            // UIManagerCanvas carries the hint/menu/pause/success/session-warning panels — without
+            // instantiating it, UIManager.Instance stays null and every ShowHint/ShowSuccess call
+            // (from SceneHintCoach and all three PuzzleController subclasses) silently no-ops.
+            var uiPrefab = Resources.Load<GameObject>("UIManagerCanvas");
+            if (uiPrefab == null)
+            {
+                Debug.LogWarning("[AppBootstrap] Resources/UIManagerCanvas prefab not found — hints/menus will not display.");
+            }
+            else
+            {
+                var uiGo = Object.Instantiate(uiPrefab);
+                uiGo.name = "UIManagerCanvas";
+            }
         }
     }
 }
