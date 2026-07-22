@@ -392,9 +392,27 @@ public static class UIBuilder
             return p.gameObject;
         }
 
+        // Small, centered panel — for transient one-line notices (a hint tooltip) that shouldn't
+        // fill the whole 1200x900 canvas the way a menu/pause/success screen reasonably does.
+        GameObject MakeCenteredPanel(string name, Color color, Vector2 size)
+        {
+            var p = NewRect(name, rt, size);
+            p.anchorMin = p.anchorMax = new Vector2(0.5f, 0.5f);
+            p.anchoredPosition = Vector2.zero;
+            var img = p.gameObject.AddComponent<Image>();
+            img.color = color;
+            img.raycastTarget = false;
+            var glassMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/UI/UIGlass.mat");
+            if (glassMat != null) img.material = glassMat;
+            p.gameObject.AddComponent<VRLearning.UI.UIGlassRounder>();
+            p.gameObject.AddComponent<CanvasGroup>();
+            p.gameObject.SetActive(false);
+            return p.gameObject;
+        }
+
         var mainMenu = MakePanel("MainMenuPanel",       new Color(0, 0, 0, 0.7f));
         var pause    = MakePanel("PausePanel",          new Color(0, 0, 0.1f, 0.8f));
-        var hint     = MakePanel("HintPanel",           new Color(0.05f, 0.05f, 0.15f, 0.9f));
+        var hint     = MakeCenteredPanel("HintPanel",   new Color(0.05f, 0.05f, 0.15f, 0.9f), new Vector2(760, 260));
         var success  = MakePanel("SuccessPanel",        new Color(0.05f, 0.2f, 0.05f, 0.9f));
         var warning  = MakePanel("SessionWarningPanel", new Color(0.3f, 0.1f, 0f, 0.9f));
 
@@ -409,6 +427,10 @@ public static class UIBuilder
         hintTMP.alignment = TextAlignmentOptions.Center;
         hintTMP.color     = Color.white;
         hintTMP.raycastTarget = false;
+        hintTMP.textWrappingMode = TextWrappingModes.Normal; // longer translations (e.g. Kinyarwanda) must wrap, not overflow off-panel
+        hintTMP.enableAutoSizing = true;
+        hintTMP.fontSizeMin = 14;
+        hintTMP.fontSizeMax = 24;
 
         // Session warning text
         var warnTxtGO = NewRect("WarningText", warning.GetComponent<RectTransform>(), Vector2.zero);
@@ -444,7 +466,11 @@ public static class UIBuilder
             ("sessionWarningText",  (Object)warnTMP),
         });
 
-        SavePrefab(canvasGO, "UIManagerCanvas");
+        // Lives in Resources (not PrefabRoot) so AppBootstrap.cs can Resources.Load + instantiate
+        // it at runtime alongside the Managers prefab — without this it's never in any scene and
+        // UIManager.Instance stays null forever.
+        PrefabUtility.SaveAsPrefabAsset(canvasGO, "Assets/Resources/UIManagerCanvas.prefab");
+        Debug.Log("[UIBuilder] Saved Assets/Resources/UIManagerCanvas.prefab");
         Object.DestroyImmediate(canvasGO);
     }
 
@@ -484,7 +510,7 @@ public static class UIBuilder
         var listTitle = NewRect("TitleText", listVL.GetComponent<RectTransform>(), new Vector2(0, 56));
         listTitle.gameObject.AddComponent<LayoutElement>().preferredHeight = 56;
         var listTitleTMP = listTitle.gameObject.AddComponent<TextMeshProUGUI>();
-        listTitleTMP.text      = "Choose a Course";
+        listTitleTMP.text      = "SIMBA — Choose a Course";
         listTitleTMP.fontSize  = 42;
         listTitleTMP.fontStyle = FontStyles.Bold;
         listTitleTMP.color     = Color.white;

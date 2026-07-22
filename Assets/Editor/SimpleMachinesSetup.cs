@@ -769,7 +769,10 @@ namespace VRLearning.Editor
             // Translucent cream tint (glassmorphism): the UIGlass shader layers a sheen gradient
             // + edge highlight on top of this color/alpha, so it reads as tinted glass rather
             // than a solid cream card.
-            img.color = new Color(0.99f, 0.98f, 0.92f, 0.38f);
+            // Solid enough that whatever's behind it (walls, clocks, etc.) doesn't bleed through
+            // and muddy the contrast for the dark ink-colored text — still a hair translucent so
+            // it doesn't look like a flat opaque card.
+            img.color = new Color(0.99f, 0.98f, 0.92f, 0.88f);
             var glassMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/UI/UIGlass.mat");
             if (glassMat != null) img.material = glassMat;
             panel.AddComponent<UIGlassRounder>();

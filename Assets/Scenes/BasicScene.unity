@@ -2441,6 +2441,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 468426693862311084, guid: 3bb1c4b2290e4418bb30751291f9b75d, type: 3}
+      propertyPath: m_text
+      value: "SIMBA \u2014 Choose a Course"
+      objectReference: {fileID: 0}
+    - target: {fileID: 468426693862311084, guid: 3bb1c4b2290e4418bb30751291f9b75d, type: 3}
       propertyPath: m_fontSize
       value: 56
       objectReference: {fileID: 0}

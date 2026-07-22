@@ -63,6 +63,7 @@ namespace VRLearning.Simulation
 
                 OnPuzzleComplete?.Invoke(result);
                 PlaySuccessFeedback();
+                ShowStars(stars);
             }
             else
             {
@@ -93,6 +94,14 @@ namespace VRLearning.Simulation
         protected virtual void PlayFailureFeedback()
         {
             Core.AudioManager.Instance?.PlaySFX(puzzleData?.FailureClip);
+        }
+
+        // Each Simple Machines scene has its own world-space StarDisplay instance (spawned by
+        // SimpleMachinesSetup.cs), so a scene-wide lookup is sufficient — there's exactly one.
+        protected virtual void ShowStars(int stars)
+        {
+            var display = UnityEngine.Object.FindFirstObjectByType<VRLearning.UI.StarDisplay>();
+            display?.Show(stars);
         }
     }
 
