@@ -1,12 +1,10 @@
 name: Build Android APK
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  # Manual only: this build pulls the full ~3GB of Git LFS assets on every run,
+  # which was exhausting the account's free LFS bandwidth quota when it ran on
+  # every push/PR to main. Trigger it by hand from the Actions tab when you
+  # actually need a fresh APK.
   workflow_dispatch:
 
 # Needed so the workflow can create Releases and upload the APK to them.
@@ -71,9 +69,8 @@ jobs:
           path: build/Android/*.apk
           if-no-files-found: error
 
-      # 5. On push to main, publish a Release with the APK attached
+      # 5. Publish a Release with the APK attached (every manual run)
       - name: Publish Release
-        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
