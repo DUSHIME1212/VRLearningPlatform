@@ -20,11 +20,13 @@ jobs:
     name: Run EditMode Tests
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout the repository with Git LFS
+      # 1. Checkout the repository. LFS is intentionally skipped here: EditMode tests build
+      #    everything in-memory (no .fbx/.blend/.glb loads), and fetching real LFS content
+      #    isn't worth the bandwidth quota this repo is already exhausting on build-apk.yml.
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
 
       # 2. Cache the Unity Library folder to speed up future runs
       - name: Cache Library
