@@ -8,7 +8,6 @@
 **Development Engine:** Unity 2022.3 LTS  
 **Primary Language:** C#  
 **XR Framework:** OpenXR + XR Interaction Toolkit
-**video link:** https://canva.link/0pcuksr3vs5xv91
 **apk link:** release files on github
 
 
